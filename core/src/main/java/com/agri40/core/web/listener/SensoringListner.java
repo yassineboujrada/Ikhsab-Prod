@@ -69,7 +69,7 @@ public class SensoringListner {
                         Integer.parseInt(params.get("stepNumber").toString())  > ((Integer)data.get("groupSteps"))
                     ) {
                         data.put("cow_hot", true);
-                        if((Boolean)json.get("sendSMS"))
+                        if((Boolean)json.get("smsService"))
                         SendSMSMessage("la vache avec l'étiquette "+ json.get("cowName") +" pourrait être en chaleur, merci de vérifier",json.get("userPhone").toString());
                         // json.get("cowId");
                         // rabbitTemplate.convertAndSend("icow.cowChaleur", json.get("cowId"));
