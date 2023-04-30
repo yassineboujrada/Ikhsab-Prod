@@ -5,19 +5,9 @@
  */
 package com.agri40.core.web.listener;
 
-import com.agri40.core.domain.User;
-import com.agri40.core.repository.UserRepository;
-import com.agri40.core.socket.Event;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.telesign.MessagingClient;
-import com.telesign.PhoneIdClient;
-import com.telesign.RestClient;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -26,6 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+
+import com.agri40.core.domain.User;
+import com.agri40.core.repository.UserRepository;
+import com.agri40.core.socket.Event;
+import com.telesign.MessagingClient;
+import com.telesign.RestClient;
+
 import reactor.core.publisher.Mono;
 
 @Component
@@ -69,8 +66,10 @@ public class SensoringListner {
                         Integer.parseInt(params.get("stepNumber").toString())  > ((Integer)data.get("groupSteps"))
                     ) {
                         data.put("cow_hot", true);
-                        if((Boolean)json.get("smsService"))
-                        SendSMSMessage("la vache avec l'étiquette "+ json.get("cowName") +" pourrait être en chaleur, merci de vérifier",json.get("userPhone").toString());
+                        if((Boolean)json.get("smsService")){ 
+                            log.info("Send SMS to {}", json.get("userPhone"));
+                            SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° "+ json.get("cowName") +" pourrait-être en chaleur. Merci de vérifier! 🙂",json.get("userPhone").toString());
+                        }
                         // json.get("cowId");
                         // rabbitTemplate.convertAndSend("icow.cowChaleur", json.get("cowId"));
                         Map<String, Object> notification = new HashMap<>();
