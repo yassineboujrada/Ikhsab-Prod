@@ -60,6 +60,9 @@ public class SocketModule {
             var params = client.getHandshakeData().getUrlParams();
             String room = params.get("room").stream().collect(Collectors.joining());
             log.info("Socket ID[{}] - room[{}] -  discnnected to Notification module through", client.getSessionId().toString(), room);
+            // remove the client from the room
+            client.leaveRoom(room);
+            
         };
     }
 }

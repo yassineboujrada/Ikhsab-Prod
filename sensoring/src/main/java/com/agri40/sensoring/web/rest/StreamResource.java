@@ -150,6 +150,8 @@ public class StreamResource {
         streamMap.put("userPhone", cow.get("userPhone"));
         streamMap.put("userId", cow.get("userId"));
 
+        log.debug("StreamMap : {}", streamMap);
+
         rabbitTemplate.convertSendAndReceive("icow.live-stream", streamMap);
         return ResponseEntity
             .created(new URI("/api/streams/" + result.getId()))

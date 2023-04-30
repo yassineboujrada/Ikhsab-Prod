@@ -254,6 +254,20 @@ public class JobRequestResource {
         return ResponseUtil.wrapOrNotFound(jobRequest);
     }
 
+    // change status of job request
+    @GetMapping("/job-requests/change-status/{id}/{status}")
+    public ResponseEntity<JobRequest> changeStatus(@PathVariable String id, @PathVariable String status) {
+        log.debug("REST request to get JobRequest : {}", id);
+        Optional<JobRequest> jobRequest = jobRequestRepository.findById(id);
+        if (jobRequest.isPresent()) {
+            jobRequest.get().setServiceStatus(status);
+            jobRequestRepository.save(jobRequest.get());
+            return ResponseEntity.ok().body(jobRequest.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     /**
      * {@code DELETE  /job-requests/:id} : delete the "id" jobRequest.
      *

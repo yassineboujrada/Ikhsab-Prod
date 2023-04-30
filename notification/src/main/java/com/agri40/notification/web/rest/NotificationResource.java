@@ -201,13 +201,12 @@ public class NotificationResource {
         return ResponseUtil.wrapOrNotFound(notification);
     }
 
-    // GET ALL NOT SEEN NOTIFICATIONS
-    @GetMapping("/notifications/notseen")
-    public ResponseEntity<List<Notification>> getAllNotSeenNotifications(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Notifications");
-        Page<Notification> page = notificationRepository.findAllBySeenIsFalse(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    // GET ALL NOT SEEN NOTIFICATIONS by user
+    @GetMapping("/notifications/notseen/{id}")
+    public ResponseEntity<List<Notification>> getAllNotSeenNotifications(@PathVariable String id) {
+        log.debug("REST request to get Notification : {}", id);
+        List<Notification> notifications = notificationRepository.findAllByReceiverAndSeen(id, false);
+        return ResponseEntity.ok().body(notifications);
     }
 
     /**

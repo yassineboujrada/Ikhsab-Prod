@@ -7,6 +7,7 @@ package com.agri40.management.web.listener;
 
 import com.agri40.management.domain.Cow;
 import com.agri40.management.domain.Events;
+import com.agri40.management.domain.Profile;
 import com.agri40.management.domain.enumeration.EventType;
 import com.agri40.management.rabbitmq.QueueSender;
 import com.agri40.management.repository.CowRepository;
@@ -52,16 +53,19 @@ public class SensoringListner {
         if (!cow.isPresent()) {
             throw new BadRequestAlertException("The Device Is Not Connected To Any Cow", ENTITY_NAME, "id null");
         }
+        Cow cow1 = cow.get();
         Map<String, Object> cowMap = new HashMap<>();
-        cowMap.put("cowId", cow.get().getId());
-        log.debug("Requested to get Cow id by deviceid: {}", cow.get());
+        cowMap.put("cowId", cow1.getId());
+        log.debug("Requested to get Cow id by deviceid: {}", cow1);
         // get user userPhone
-        Optional<com.agri40.management.domain.Profile> profile = profileRepository.findByUserId(cow.get().getUserId());
+        Optional<com.agri40.management.domain.Profile> profile = profileRepository.findByUserId(cow1.getUserId());
+
         if (!profile.isPresent()) {
             throw new BadRequestAlertException("The Cow Is Not Connected To Any User", ENTITY_NAME, "id null");
         }
-        cowMap.put("userPhone", profile.get().getPhoneNumber());
-        cowMap.put("userID", cow.get().getUserId());
+        Profile profile1 = profile.get();
+        cowMap.put("userPhone", profile1.getPhoneNumber());
+        cowMap.put("userId", profile1.getUserId());
         return cowMap;
     }
 

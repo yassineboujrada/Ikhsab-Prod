@@ -234,22 +234,22 @@ public class ProfileResource {
         Optional<Profile> profile = profileRepository.findByUserId(id);
         if (profile.isPresent()) {
             Profile profile1 = profile.get();
-            Map<String, Object> prifleinfo = (Map<String, Object>) rabbitTemplate.convertSendAndReceive(
+            Map<String, Object> profileEnfo = (Map<String, Object>) rabbitTemplate.convertSendAndReceive(
                 "icow.profile",
                 profile1.getUserId()
             );
             ProfileFilter profileFilter = new ProfileFilter();
-            profileFilter.setCity((String) prifleinfo.get("city"));
-            profileFilter.setAccountType((String) prifleinfo.get("accountType"));
-            profileFilter.setDescription((String) prifleinfo.get("description"));
-            profileFilter.setPhoneNumber((String) prifleinfo.get("phoneNumber"));
-            profileFilter.setUserId((String) prifleinfo.get("userId"));
-            profileFilter.setProfilePicture((byte[]) prifleinfo.get("profilePicture"));
-            profileFilter.setRating((Map<String, Object>) prifleinfo.get("rating"));
+            profileFilter.setCity((String) profileEnfo.get("city"));
+            profileFilter.setAccountType((String) profileEnfo.get("accountType"));
+            profileFilter.setDescription((String) profileEnfo.get("description"));
+            profileFilter.setPhoneNumber((String) profileEnfo.get("phoneNumber"));
+            profileFilter.setUserId((String) profileEnfo.get("userId"));
+            profileFilter.setProfilePicture((byte[]) profileEnfo.get("profilePicture"));
+            profileFilter.setRating((Map<String, Object>) profileEnfo.get("rating"));
 
-            profileFilter.setFirstName((String) prifleinfo.get("firstname"));
-            profileFilter.setLastName((String) prifleinfo.get("lastname"));
-            profileFilter.setEmail((String) prifleinfo.get("email"));
+            profileFilter.setFirstName((String) profileEnfo.get("firstname"));
+            profileFilter.setLastName((String) profileEnfo.get("lastname"));
+            profileFilter.setEmail((String) profileEnfo.get("email"));
 
             return ResponseEntity
                 .ok()
@@ -267,21 +267,21 @@ public class ProfileResource {
         // create a list of profile filter
         List<ProfileFilter> profileFilters = new ArrayList<>();
         for (Profile profile1 : profile) {
-            Map<String, Object> prifleinfo = (Map<String, Object>) rabbitTemplate.convertSendAndReceive(
+            Map<String, Object> profileEnfo = (Map<String, Object>) rabbitTemplate.convertSendAndReceive(
                 "icow.profile",
                 profile1.getUserId()
             );
             ProfileFilter profileFilter = new ProfileFilter();
-            profileFilter.setCity((String) prifleinfo.get("city"));
-            profileFilter.setAccountType((String) prifleinfo.get("accountType"));
-            profileFilter.setDescription((String) prifleinfo.get("description"));
-            profileFilter.setPhoneNumber((String) prifleinfo.get("phoneNumber"));
-            profileFilter.setUserId((String) prifleinfo.get("userId"));
-            profileFilter.setProfilePicture((byte[]) prifleinfo.get("profilePicture"));
-            profileFilter.setRating((Map<String, Object>) prifleinfo.get("rating"));
-            profileFilter.setFirstName((String) prifleinfo.get("firstname"));
-            profileFilter.setLastName((String) prifleinfo.get("lastname"));
-            profileFilter.setEmail((String) prifleinfo.get("email"));
+            profileFilter.setCity((String) profileEnfo.get("city"));
+            profileFilter.setAccountType((String) profileEnfo.get("accountType"));
+            profileFilter.setDescription((String) profileEnfo.get("description"));
+            profileFilter.setPhoneNumber((String) profileEnfo.get("phoneNumber"));
+            profileFilter.setUserId((String) profileEnfo.get("userId"));
+            profileFilter.setProfilePicture((byte[]) profileEnfo.get("profilePicture"));
+            profileFilter.setRating((Map<String, Object>) profileEnfo.get("rating"));
+            profileFilter.setFirstName((String) profileEnfo.get("firstname"));
+            profileFilter.setLastName((String) profileEnfo.get("lastname"));
+            profileFilter.setEmail((String) profileEnfo.get("email"));
             profileFilters.add(profileFilter);
         }
         return ResponseEntity

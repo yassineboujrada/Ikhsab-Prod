@@ -55,7 +55,7 @@ public class SensoringListner {
             if (json.get("params") != null) {
                 Map<String, Object> params = (Map<String, Object>) json.get("params");
                 data.put("stepNumber", params.get("stepNumber"));
-                data.put("cow_high", Integer.parseInt(params.get("stepNumber").toString()) > ((Integer)data.get("groupSteps")+5) );
+                data.put("cow_high", Integer.parseInt(params.get("stepNumber").toString()) > ((Integer)data.get("groupSteps")) );
                 if (json.get("stepNumber1") != null && json.get("stepNumber2") != null) {
                     log.info(
                         "last stepNbr {} , stepNbr1 {} , stepNbr2 {}",
@@ -64,9 +64,9 @@ public class SensoringListner {
                         json.get("stepNumber2")
                     );
                     if (
-                        Integer.parseInt(json.get("stepNumber1").toString()) > 5 &&
-                        Integer.parseInt(json.get("stepNumber2").toString()) > 5 &&
-                        Integer.parseInt(params.get("stepNumber").toString()) > 5
+                        Integer.parseInt(json.get("stepNumber1").toString()) > ((Integer)data.get("groupSteps")) &&
+                        Integer.parseInt(json.get("stepNumber2").toString())  > ((Integer)data.get("groupSteps")) &&
+                        Integer.parseInt(params.get("stepNumber").toString())  > ((Integer)data.get("groupSteps"))
                     ) {
                         data.put("cow_hot", true);
                         // SendSMSMessage("la vache avec l'étiquette "+ json.get("cowId") +" pourrait être en chaleur, merci de vérifier",json.get("userPhone").toString());

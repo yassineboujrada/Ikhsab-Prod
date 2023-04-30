@@ -51,6 +51,7 @@ public class SensoringListner {
     //    icow.deviceid
     @RabbitListener(queues = { "icow.save-notification" })
     public String receiver(Map<String, Object> data) {
+        log.info("Received data from icow.save-notification queue : "+data);
         // save notification in database
         Notification notification = new Notification();
         notification.setContent(data.get("content").toString());

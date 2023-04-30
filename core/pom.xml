@@ -50,7 +50,7 @@
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
         <spring-boot.version>2.7.3</spring-boot.version>
-        <blockhound-junit-platform.version>1.0.6.RELEASE</blockhound-junit-platform.version>
+        <blockhound-junit-platform.version>1.0.8.RELEASE</blockhound-junit-platform.version>
         <archunit-junit5.version>0.22.0</archunit-junit5.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <!-- Plugin versions -->
