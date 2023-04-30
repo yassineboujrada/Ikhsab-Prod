@@ -90,7 +90,7 @@ public class StreamResource {
         // set creqtedAt as linux timestamp
         stream.setCreatedAt(Long.toString(Instant.now().getEpochSecond()));
         // stream.setDeviceId("rfid-cow");
-        stream.setDeviceId("ACRT01");
+        stream.setDeviceId("rfid-cow");
         stream.setType("RFID");
         return createStream(stream, apiKey);
     }

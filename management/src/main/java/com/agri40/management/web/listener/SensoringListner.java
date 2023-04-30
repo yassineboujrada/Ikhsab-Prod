@@ -48,8 +48,8 @@ public class SensoringListner {
     public Map<String, Object> receive(String deviceid) throws Exception {
         log.debug("Requested to get Cow id by deviceid: {}", deviceid);
         System.out.println("Message " + deviceid);
-        //get cow
-        Optional<com.agri40.management.domain.Cow> cow = cowRepository.findByDeviceId(deviceid);
+        //get cow by rf id or collar id or pedometre id
+        Optional<com.agri40.management.domain.Cow> cow = cowRepository.findByRfidOrCollarOrPedometre(deviceid, deviceid, deviceid);
         if (!cow.isPresent()) {
             throw new BadRequestAlertException("The Device Is Not Connected To Any Cow", ENTITY_NAME, "id null");
         }

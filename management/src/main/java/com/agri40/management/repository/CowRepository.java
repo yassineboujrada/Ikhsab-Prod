@@ -13,9 +13,10 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CowRepository extends MongoRepository<Cow, String> {
-    Optional<Cow> findByDeviceId(String deviceid);
 
     List<Cow> findByEnclosId(String id);
 
     List<Cow> findByWaitingForInseminator(boolean b);
+
+    Optional<Cow> findByRfidOrCollarOrPedometre(String deviceid, String deviceid2, String deviceid3);
 }
