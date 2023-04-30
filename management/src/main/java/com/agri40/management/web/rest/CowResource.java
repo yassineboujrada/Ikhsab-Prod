@@ -138,14 +138,20 @@ public class CowResource {
                 if (cow.getNom() != null) {
                     existingCow.setNom(cow.getNom());
                 }
-                if (cow.getDeviceId() != null) {
-                    existingCow.setDeviceId(cow.getDeviceId());
-                }
                 if (cow.getUserId() != null) {
                     existingCow.setUserId(cow.getUserId());
                 }
                 if (cow.getWaitingForInseminator() != null) {
                     existingCow.setWaitingForInseminator(cow.getWaitingForInseminator());
+                }
+                if (cow.getRfid() != null) {
+                    existingCow.setRfid(cow.getRfid());
+                }
+                if (cow.getPedometre() != null) {
+                    existingCow.setPedometre(cow.getPedometre());
+                }
+                if (cow.getCollar() != null) {
+                    existingCow.setCollar(cow.getCollar());
                 }
 
                 return existingCow;
@@ -154,34 +160,7 @@ public class CowResource {
 
         return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cow.getId()));
     }
-
-    /**
-     * {@code GET  /cows} : get all the cows.
-     *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cows in body.
-     */
-    @GetMapping("/cows")
-    public ResponseEntity<List<Cow>> getAllCows(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Cows");
-        Page<Cow> page = cowRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /cows/:id} : get the "id" cow.
-     *
-     * @param id the id of the cow to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the cow, or with status {@code 404 (Not Found)}.
-     */
-    @GetMapping("/cows/{id}")
-    public ResponseEntity<Cow> getCow(@PathVariable String id) {
-        log.debug("REST request to get Cow : {}", id);
-        Optional<Cow> cow = cowRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(cow);
-    }
-
+    
     @GetMapping("/cows/enclos/{id}")
     public ResponseEntity<List<Cow>> getCowByEnclos(@PathVariable String id) {
         log.debug("REST request to get Cow : {}", id);
@@ -209,6 +188,33 @@ public class CowResource {
         log.debug("REST request to get Cow : {}");
         List<Cow> cows = cowRepository.findByWaitingForInseminator(true);
         return ResponseEntity.ok().body(cows);
+    }
+
+    /**
+     * {@code GET  /cows} : get all the cows.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cows in body.
+     */
+    @GetMapping("/cows")
+    public ResponseEntity<List<Cow>> getAllCows(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Cows");
+        Page<Cow> page = cowRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /cows/:id} : get the "id" cow.
+     *
+     * @param id the id of the cow to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the cow, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/cows/{id}")
+    public ResponseEntity<Cow> getCow(@PathVariable String id) {
+        log.debug("REST request to get Cow : {}", id);
+        Optional<Cow> cow = cowRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(cow);
     }
 
     /**

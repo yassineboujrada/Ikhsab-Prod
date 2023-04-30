@@ -7,7 +7,9 @@ import com.agri40.notification.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -256,12 +258,30 @@ public class JobRequestResource {
 
     // change status of job request
     @GetMapping("/job-requests/change-status/{id}/{status}")
-    public ResponseEntity<JobRequest> changeStatus(@PathVariable String id, @PathVariable String status) {
+    public ResponseEntity<JobRequest> changeStatus(@PathVariable String id, @PathVariable String status, @PathVariable String receiver, @PathVariable String message) {
         log.debug("REST request to get JobRequest : {}", id);
         Optional<JobRequest> jobRequest = jobRequestRepository.findById(id);
+        
         if (jobRequest.isPresent()) {
-            jobRequest.get().setServiceStatus(status);
-            jobRequestRepository.save(jobRequest.get());
+            JobRequest result = jobRequest.get();
+            result.setServiceStatus(status);
+            jobRequestRepository.save(result);
+            Map<String, Object> notification = new HashMap<>();
+            notification.put("content", message);
+            notification.put("room", "notification" + receiver);
+            notification.put("createdDateTime", Instant.now());
+            notification.put("type", "JOB_REQUEST");
+            notification.put("cowId", result.getCowId());
+            notification.put("receiver", receiver);
+            if(receiver.equals(result.getConsumer())) {
+                notification.put("sender", result.getProvider());
+            }
+            else if(receiver.equals(result.getProvider())) {
+                notification.put("sender", result.getConsumer());
+            }
+            
+            rabbitTemplate.convertSendAndReceive("icow.notification", notification);
+
             return ResponseEntity.ok().body(jobRequest.get());
         } else {
             return ResponseEntity.notFound().build();

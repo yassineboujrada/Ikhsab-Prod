@@ -2,6 +2,8 @@ package com.agri40.notification.repository;
 
 import com.agri40.notification.domain.JobRequest;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,4 +21,6 @@ public interface JobRequestRepository extends MongoRepository<JobRequest, String
     List<JobRequest> findAllByProviderOrConsumer(String provider, String consumer);
 
     List<JobRequest> findAllByProviderOrConsumerAndServiceStatus(String id, String id2, String string);
+
+    Optional<JobRequest> findByIdAndProviderOrConsumer(String id, String receiver, String receiver2);
 }

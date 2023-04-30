@@ -89,7 +89,8 @@ public class StreamResource {
         stream.setParams(params);
         // set creqtedAt as linux timestamp
         stream.setCreatedAt(Long.toString(Instant.now().getEpochSecond()));
-        stream.setDeviceId("rfid-cow");
+        // stream.setDeviceId("rfid-cow");
+        stream.setDeviceId("ACRT01");
         stream.setType("RFID");
         return createStream(stream, apiKey);
     }
@@ -115,50 +116,72 @@ public class StreamResource {
             throw new BadRequestAlertException("A new stream cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        validateStream(stream);
+        try{
+            validateStream(stream);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createFailureAlert(applicationName, true, 
+                    ENTITY_NAME, "invalidstream", e.getMessage()))
+                    .body(null);
+        }
 
-        Map<String, Object> cow = (Map<String, Object>) rabbitTemplate.convertSendAndReceive("icow.deviceid", stream.getDeviceId());
-        stream.setCowId((String) cow.get("cowId"));
-
-        log.debug("------------------------Stream : {}", stream);
-
-        Map<String, Object> streamMap = new HashMap<>();
+        
+        Map<String, Object> cowAndProfileData = (Map<String, Object>) rabbitTemplate.convertSendAndReceive("icow.deviceid",stream.getDeviceId());
+        stream.setCowId((String) cowAndProfileData.get("cowId"));
         if (stream.getType().equals("PEDOMETRE")) {
             processPedometerStream(stream);
-            // get last 2 steps number in last 2 saved streams
-            List<Stream> streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(stream.getCowId(), "PEDOMETRE");
-            // store last 2 steps number in streamMap
-            if (streams.size() > 1) {
-                streamMap.put("stepNumber1", streams.get(1).getParams().get("stepNumber"));
-                streamMap.put("stepNumber2", streams.get(0).getParams().get("stepNumber"));
-                Map<String, Object> params = stream.getParams();
-                params.put("groupSteps", (int) (Math.random() * 3 + 4));
-                stream.setParams(params);
+            // get last 10 saved streams
+            List<Stream> streams = streamRepository.findFirst10ByCowIdAndTypeOrderByCreatedAtDesc(stream.getCowId(),
+                    "PEDOMETRE");
+            int numStreams = streams.size();
+            int threshold = (int) (Math.random() * 4 + 4); // random number between 4 and 7
+            int countHighActivity = 0;
+            for (int i = 0; i < numStreams; i++) {
+                Stream s = streams.get(i);
+                if (Integer.parseInt(s.getParams().get("stepNumber").toString()) >= threshold) {
+                    countHighActivity++;
+                } 
             }
+            Map<String, Object> liveStream = new HashMap<>();
+            liveStream.put("avgStepNumber", threshold);
+            liveStream.put("createdAt", stream.getCreatedAt());
+            liveStream.put("room", "notification"+stream.getCowId());
+            liveStream.put("stepNumber", stream.getParams().get("stepNumber"));
+            if(Integer.parseInt(stream.getParams().get("stepNumber").toString()) >= threshold){
+                liveStream.put("highActivity", true);
+                log.debug("********* high activity *********");
+            }
+            else 
+                liveStream.put("highActivity", false);
+
+            if (countHighActivity >= numStreams * 0.3){
+                liveStream.put("cowHot", true);
+                log.debug("********* Hot Cow *********");
+                // cowid user id phone number
+                rabbitTemplate.convertAndSend("icow.hotSuspect", cowAndProfileData);
+            }
+            else
+                liveStream.put("cowHot", false);
+            log.debug("live Stream : {}", liveStream);
+            
+            rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         } else if (stream.getType().equals("COLLAR")) {
             processCollarStream(stream);
         }
-        log.debug("Stream : {}", stream);
+        else if (stream.getType().equals("RFID")){
+            
+            Map<String, Object> liveStream = new HashMap<>();
+            liveStream.put("createdAt", stream.getCreatedAt());
+            liveStream.put("room", "notification" + stream.getCowId());
+            liveStream.put("tag", stream.getParams().get("tag"));
+            rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
+        }
         Stream result = streamRepository.save(stream);
-        // // create map from Stream object
-
-        streamMap.put("id", result.getId());
-        streamMap.put("type", result.getType());
-        streamMap.put("createdAt", result.getCreatedAt());
-        streamMap.put("params", result.getParams());
-        streamMap.put("cowId", result.getCowId());
-        streamMap.put("userPhone", cow.get("userPhone"));
-        streamMap.put("userId", cow.get("userId"));
-        streamMap.put("cowName", cow.get("cowName"));
-        streamMap.put("smsService", cow.get("smsService"));
-
-        log.debug("StreamMap : {}", streamMap);
-
-        rabbitTemplate.convertSendAndReceive("icow.live-stream", streamMap);
         return ResponseEntity
-            .created(new URI("/api/streams/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
-            .body(result);
+                .created(new URI("/api/streams/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
+                .body(result);
+
     }
 
     private void validateStream(Stream stream) throws BadRequestAlertException {

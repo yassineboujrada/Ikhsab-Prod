@@ -15,7 +15,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-
-    
+    @Bean
+    public Declarables S() {
+        return new Declarables(
+                new DirectExchange("icow.exchange"),
+                new Queue("icow.hotSuspect"),
+                new Binding("icow.hotSuspect", Binding.DestinationType.QUEUE, "icow.exchange", "Icow-routing-key", null));
+    }
 
 }

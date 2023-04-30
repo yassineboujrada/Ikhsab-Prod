@@ -28,16 +28,24 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "deviceId",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "userId",
       "fieldType": "String"
     },
     {
       "fieldName": "waitingForInseminator",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "rfid",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pedometre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "collar",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

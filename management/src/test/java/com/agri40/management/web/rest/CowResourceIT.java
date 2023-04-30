@@ -41,14 +41,20 @@ class CowResourceIT {
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DEVICE_ID = "AAAAAAAAAA";
-    private static final String UPDATED_DEVICE_ID = "BBBBBBBBBB";
-
     private static final String DEFAULT_USER_ID = "AAAAAAAAAA";
     private static final String UPDATED_USER_ID = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_WAITING_FOR_INSEMINATOR = false;
     private static final Boolean UPDATED_WAITING_FOR_INSEMINATOR = true;
+
+    private static final String DEFAULT_RFID = "AAAAAAAAAA";
+    private static final String UPDATED_RFID = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PEDOMETRE = "AAAAAAAAAA";
+    private static final String UPDATED_PEDOMETRE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_COLLAR = "AAAAAAAAAA";
+    private static final String UPDATED_COLLAR = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/cows";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -74,9 +80,11 @@ class CowResourceIT {
             .enclosId(DEFAULT_ENCLOS_ID)
             .repondeur(DEFAULT_REPONDEUR)
             .nom(DEFAULT_NOM)
-            .deviceId(DEFAULT_DEVICE_ID)
             .userId(DEFAULT_USER_ID)
-            .waitingForInseminator(DEFAULT_WAITING_FOR_INSEMINATOR);
+            .waitingForInseminator(DEFAULT_WAITING_FOR_INSEMINATOR)
+            .rfid(DEFAULT_RFID)
+            .pedometre(DEFAULT_PEDOMETRE)
+            .collar(DEFAULT_COLLAR);
         return cow;
     }
 
@@ -93,9 +101,11 @@ class CowResourceIT {
             .enclosId(UPDATED_ENCLOS_ID)
             .repondeur(UPDATED_REPONDEUR)
             .nom(UPDATED_NOM)
-            .deviceId(UPDATED_DEVICE_ID)
             .userId(UPDATED_USER_ID)
-            .waitingForInseminator(UPDATED_WAITING_FOR_INSEMINATOR);
+            .waitingForInseminator(UPDATED_WAITING_FOR_INSEMINATOR)
+            .rfid(UPDATED_RFID)
+            .pedometre(UPDATED_PEDOMETRE)
+            .collar(UPDATED_COLLAR);
         return cow;
     }
 
@@ -122,9 +132,11 @@ class CowResourceIT {
         assertThat(testCow.getEnclosId()).isEqualTo(DEFAULT_ENCLOS_ID);
         assertThat(testCow.getRepondeur()).isEqualTo(DEFAULT_REPONDEUR);
         assertThat(testCow.getNom()).isEqualTo(DEFAULT_NOM);
-        assertThat(testCow.getDeviceId()).isEqualTo(DEFAULT_DEVICE_ID);
         assertThat(testCow.getUserId()).isEqualTo(DEFAULT_USER_ID);
         assertThat(testCow.getWaitingForInseminator()).isEqualTo(DEFAULT_WAITING_FOR_INSEMINATOR);
+        assertThat(testCow.getRfid()).isEqualTo(DEFAULT_RFID);
+        assertThat(testCow.getPedometre()).isEqualTo(DEFAULT_PEDOMETRE);
+        assertThat(testCow.getCollar()).isEqualTo(DEFAULT_COLLAR);
     }
 
     @Test
@@ -160,9 +172,11 @@ class CowResourceIT {
             .andExpect(jsonPath("$.[*].enclosId").value(hasItem(DEFAULT_ENCLOS_ID)))
             .andExpect(jsonPath("$.[*].repondeur").value(hasItem(DEFAULT_REPONDEUR)))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
-            .andExpect(jsonPath("$.[*].deviceId").value(hasItem(DEFAULT_DEVICE_ID)))
             .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID)))
-            .andExpect(jsonPath("$.[*].waitingForInseminator").value(hasItem(DEFAULT_WAITING_FOR_INSEMINATOR.booleanValue())));
+            .andExpect(jsonPath("$.[*].waitingForInseminator").value(hasItem(DEFAULT_WAITING_FOR_INSEMINATOR.booleanValue())))
+            .andExpect(jsonPath("$.[*].rfid").value(hasItem(DEFAULT_RFID)))
+            .andExpect(jsonPath("$.[*].pedometre").value(hasItem(DEFAULT_PEDOMETRE)))
+            .andExpect(jsonPath("$.[*].collar").value(hasItem(DEFAULT_COLLAR)));
     }
 
     @Test
@@ -181,9 +195,11 @@ class CowResourceIT {
             .andExpect(jsonPath("$.enclosId").value(DEFAULT_ENCLOS_ID))
             .andExpect(jsonPath("$.repondeur").value(DEFAULT_REPONDEUR))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
-            .andExpect(jsonPath("$.deviceId").value(DEFAULT_DEVICE_ID))
             .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID))
-            .andExpect(jsonPath("$.waitingForInseminator").value(DEFAULT_WAITING_FOR_INSEMINATOR.booleanValue()));
+            .andExpect(jsonPath("$.waitingForInseminator").value(DEFAULT_WAITING_FOR_INSEMINATOR.booleanValue()))
+            .andExpect(jsonPath("$.rfid").value(DEFAULT_RFID))
+            .andExpect(jsonPath("$.pedometre").value(DEFAULT_PEDOMETRE))
+            .andExpect(jsonPath("$.collar").value(DEFAULT_COLLAR));
     }
 
     @Test
@@ -207,9 +223,11 @@ class CowResourceIT {
             .enclosId(UPDATED_ENCLOS_ID)
             .repondeur(UPDATED_REPONDEUR)
             .nom(UPDATED_NOM)
-            .deviceId(UPDATED_DEVICE_ID)
             .userId(UPDATED_USER_ID)
-            .waitingForInseminator(UPDATED_WAITING_FOR_INSEMINATOR);
+            .waitingForInseminator(UPDATED_WAITING_FOR_INSEMINATOR)
+            .rfid(UPDATED_RFID)
+            .pedometre(UPDATED_PEDOMETRE)
+            .collar(UPDATED_COLLAR);
 
         restCowMockMvc
             .perform(
@@ -228,9 +246,11 @@ class CowResourceIT {
         assertThat(testCow.getEnclosId()).isEqualTo(UPDATED_ENCLOS_ID);
         assertThat(testCow.getRepondeur()).isEqualTo(UPDATED_REPONDEUR);
         assertThat(testCow.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCow.getDeviceId()).isEqualTo(UPDATED_DEVICE_ID);
         assertThat(testCow.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testCow.getWaitingForInseminator()).isEqualTo(UPDATED_WAITING_FOR_INSEMINATOR);
+        assertThat(testCow.getRfid()).isEqualTo(UPDATED_RFID);
+        assertThat(testCow.getPedometre()).isEqualTo(UPDATED_PEDOMETRE);
+        assertThat(testCow.getCollar()).isEqualTo(UPDATED_COLLAR);
     }
 
     @Test
@@ -299,8 +319,10 @@ class CowResourceIT {
             .enclosId(UPDATED_ENCLOS_ID)
             .repondeur(UPDATED_REPONDEUR)
             .nom(UPDATED_NOM)
-            .deviceId(UPDATED_DEVICE_ID)
-            .waitingForInseminator(UPDATED_WAITING_FOR_INSEMINATOR);
+            .userId(UPDATED_USER_ID)
+            .rfid(UPDATED_RFID)
+            .pedometre(UPDATED_PEDOMETRE)
+            .collar(UPDATED_COLLAR);
 
         restCowMockMvc
             .perform(
@@ -319,9 +341,11 @@ class CowResourceIT {
         assertThat(testCow.getEnclosId()).isEqualTo(UPDATED_ENCLOS_ID);
         assertThat(testCow.getRepondeur()).isEqualTo(UPDATED_REPONDEUR);
         assertThat(testCow.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCow.getDeviceId()).isEqualTo(UPDATED_DEVICE_ID);
-        assertThat(testCow.getUserId()).isEqualTo(DEFAULT_USER_ID);
-        assertThat(testCow.getWaitingForInseminator()).isEqualTo(UPDATED_WAITING_FOR_INSEMINATOR);
+        assertThat(testCow.getUserId()).isEqualTo(UPDATED_USER_ID);
+        assertThat(testCow.getWaitingForInseminator()).isEqualTo(DEFAULT_WAITING_FOR_INSEMINATOR);
+        assertThat(testCow.getRfid()).isEqualTo(UPDATED_RFID);
+        assertThat(testCow.getPedometre()).isEqualTo(UPDATED_PEDOMETRE);
+        assertThat(testCow.getCollar()).isEqualTo(UPDATED_COLLAR);
     }
 
     @Test
@@ -341,9 +365,11 @@ class CowResourceIT {
             .enclosId(UPDATED_ENCLOS_ID)
             .repondeur(UPDATED_REPONDEUR)
             .nom(UPDATED_NOM)
-            .deviceId(UPDATED_DEVICE_ID)
             .userId(UPDATED_USER_ID)
-            .waitingForInseminator(UPDATED_WAITING_FOR_INSEMINATOR);
+            .waitingForInseminator(UPDATED_WAITING_FOR_INSEMINATOR)
+            .rfid(UPDATED_RFID)
+            .pedometre(UPDATED_PEDOMETRE)
+            .collar(UPDATED_COLLAR);
 
         restCowMockMvc
             .perform(
@@ -362,9 +388,11 @@ class CowResourceIT {
         assertThat(testCow.getEnclosId()).isEqualTo(UPDATED_ENCLOS_ID);
         assertThat(testCow.getRepondeur()).isEqualTo(UPDATED_REPONDEUR);
         assertThat(testCow.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCow.getDeviceId()).isEqualTo(UPDATED_DEVICE_ID);
         assertThat(testCow.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testCow.getWaitingForInseminator()).isEqualTo(UPDATED_WAITING_FOR_INSEMINATOR);
+        assertThat(testCow.getRfid()).isEqualTo(UPDATED_RFID);
+        assertThat(testCow.getPedometre()).isEqualTo(UPDATED_PEDOMETRE);
+        assertThat(testCow.getCollar()).isEqualTo(UPDATED_COLLAR);
     }
 
     @Test

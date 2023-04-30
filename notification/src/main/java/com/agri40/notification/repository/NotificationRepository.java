@@ -19,4 +19,8 @@ public interface NotificationRepository extends MongoRepository<Notification, St
     Page<Notification> findAllBySeenIsFalse(Pageable pageable);
 
     List<Notification> findAllByReceiverAndSeen(String id, boolean b);
+
+    Notification findFirstByCowIdAndSeenOrderByDateDesc(String cowId, boolean b);
+
+    Notification findFirstByCowIdOrderByDateDesc(String string);
 }

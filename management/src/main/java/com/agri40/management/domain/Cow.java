@@ -32,14 +32,20 @@ public class Cow implements Serializable {
     @Field("nom")
     private String nom;
 
-    @Field("device_id")
-    private String deviceId;
-
     @Field("user_id")
     private String userId;
 
     @Field("waiting_for_inseminator")
     private Boolean waitingForInseminator;
+
+    @Field("rfid")
+    private String rfid;
+
+    @Field("pedometre")
+    private String pedometre;
+
+    @Field("collar")
+    private String collar;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -121,19 +127,6 @@ public class Cow implements Serializable {
         this.nom = nom;
     }
 
-    public String getDeviceId() {
-        return this.deviceId;
-    }
-
-    public Cow deviceId(String deviceId) {
-        this.setDeviceId(deviceId);
-        return this;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
     public String getUserId() {
         return this.userId;
     }
@@ -158,6 +151,45 @@ public class Cow implements Serializable {
 
     public void setWaitingForInseminator(Boolean waitingForInseminator) {
         this.waitingForInseminator = waitingForInseminator;
+    }
+
+    public String getRfid() {
+        return this.rfid;
+    }
+
+    public Cow rfid(String rfid) {
+        this.setRfid(rfid);
+        return this;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid;
+    }
+
+    public String getPedometre() {
+        return this.pedometre;
+    }
+
+    public Cow pedometre(String pedometre) {
+        this.setPedometre(pedometre);
+        return this;
+    }
+
+    public void setPedometre(String pedometre) {
+        this.pedometre = pedometre;
+    }
+
+    public String getCollar() {
+        return this.collar;
+    }
+
+    public Cow collar(String collar) {
+        this.setCollar(collar);
+        return this;
+    }
+
+    public void setCollar(String collar) {
+        this.collar = collar;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -189,9 +221,11 @@ public class Cow implements Serializable {
             ", enclosId='" + getEnclosId() + "'" +
             ", repondeur='" + getRepondeur() + "'" +
             ", nom='" + getNom() + "'" +
-            ", deviceId='" + getDeviceId() + "'" +
             ", userId='" + getUserId() + "'" +
             ", waitingForInseminator='" + getWaitingForInseminator() + "'" +
+            ", rfid='" + getRfid() + "'" +
+            ", pedometre='" + getPedometre() + "'" +
+            ", collar='" + getCollar() + "'" +
             "}";
     }
 }
