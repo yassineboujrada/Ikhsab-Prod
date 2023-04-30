@@ -13,6 +13,9 @@ import com.telesign.MessagingClient;
 import com.telesign.PhoneIdClient;
 import com.telesign.RestClient;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -73,7 +76,7 @@ public class SensoringListner {
                         Map<String, Object> notification = new HashMap<>();
                         notification.put("content", "La vache " + json.get("cowId") + " est probablement en chaleur, merci de verifier");
                         notification.put("room", "notificationuser-1");
-                        notification.put("createdDateTime", Instant.now().toString());
+                        notification.put("createdDateTime", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
                         notification.put("type", "chaleur");
                         notification.put("cowId", json.get("cowId"));
                         notification.put("notificationId", notificationId);
@@ -83,7 +86,7 @@ public class SensoringListner {
                         data.put("cow_hot", false);
                     }
                 }
-                data.put("createdDateTime", Instant.now().toString());
+                data.put("createdDateTime", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
                 Event event = new Event(data);
                 eventPublisher.publishEvent(event);
                 return null;
