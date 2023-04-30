@@ -154,6 +154,9 @@ public class ProfileResource {
                 if (profile.getRating() != null) {
                     existingProfile.setRating(profile.getRating());
                 }
+                if (profile.getSmsService() != null) {
+                    existingProfile.setSmsService(profile.getSmsService());
+                }
 
                 return existingProfile;
             })

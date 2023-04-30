@@ -2,6 +2,7 @@ package com.agri40.management.domain;
 
 import java.io.Serializable;
 import java.util.Map;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -41,6 +42,9 @@ public class Profile implements Serializable {
 
     @Field("rating")
     private Map<String, Object> rating;
+
+    @Field("sms_service")
+    private Boolean smsService;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -161,6 +165,19 @@ public class Profile implements Serializable {
         this.rating = rating;
     }
 
+    public Boolean getSmsService() {
+        return this.smsService;
+    }
+
+    public Profile smsService(Boolean smsService) {
+        this.setSmsService(smsService);
+        return this;
+    }
+
+    public void setSmsService(Boolean smsService) {
+        this.smsService = smsService;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -193,6 +210,7 @@ public class Profile implements Serializable {
             ", profilePictureContentType='" + getProfilePictureContentType() + "'" +
             ", accountType='" + getAccountType() + "'" +
             ", rating=" + getRating() +
+            ", smsService='" + getSmsService() + "'" +
             "}";
     }
 }

@@ -66,6 +66,8 @@ public class SensoringListner {
         Profile profile1 = profile.get();
         cowMap.put("userPhone", profile1.getPhoneNumber());
         cowMap.put("userId", profile1.getUserId());
+        cowMap.put("smsService", profile1.getSmsService());
+        cowMap.put("cowName", cow1.getNom());
         return cowMap;
     }
 

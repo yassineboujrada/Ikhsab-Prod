@@ -51,6 +51,9 @@ class ProfileResourceIT {
     private static final Map<String, Object> DEFAULT_RATING = null;
     private static final Map<String, Object> UPDATED_RATING = null;
 
+    private static final Boolean DEFAULT_SMS_SERVICE = false;
+    private static final Boolean UPDATED_SMS_SERVICE = true;
+
     private static final String ENTITY_API_URL = "/api/profiles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -77,7 +80,8 @@ class ProfileResourceIT {
             .profilePicture(DEFAULT_PROFILE_PICTURE)
             .profilePictureContentType(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE)
             .accountType(DEFAULT_ACCOUNT_TYPE)
-            .rating(DEFAULT_RATING);
+            .rating(DEFAULT_RATING)
+            .smsService(DEFAULT_SMS_SERVICE);
         return profile;
     }
 
@@ -96,7 +100,8 @@ class ProfileResourceIT {
             .profilePicture(UPDATED_PROFILE_PICTURE)
             .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE)
             .accountType(UPDATED_ACCOUNT_TYPE)
-            .rating(UPDATED_RATING);
+            .rating(UPDATED_RATING)
+            .smsService(UPDATED_SMS_SERVICE);
         return profile;
     }
 
@@ -126,6 +131,7 @@ class ProfileResourceIT {
         assertThat(testProfile.getProfilePictureContentType()).isEqualTo(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE);
         assertThat(testProfile.getAccountType()).isEqualTo(DEFAULT_ACCOUNT_TYPE);
         assertThat(testProfile.getRating()).isEqualTo(DEFAULT_RATING);
+        assertThat(testProfile.getSmsService()).isEqualTo(DEFAULT_SMS_SERVICE);
     }
 
     @Test
@@ -163,7 +169,8 @@ class ProfileResourceIT {
             .andExpect(jsonPath("$.[*].profilePictureContentType").value(hasItem(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].profilePicture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_PICTURE))))
             .andExpect(jsonPath("$.[*].accountType").value(hasItem(DEFAULT_ACCOUNT_TYPE)))
-            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)));
+            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)))
+            .andExpect(jsonPath("$.[*].smsService").value(hasItem(DEFAULT_SMS_SERVICE.booleanValue())));
     }
 
     @Test
@@ -184,7 +191,8 @@ class ProfileResourceIT {
             .andExpect(jsonPath("$.profilePictureContentType").value(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE))
             .andExpect(jsonPath("$.profilePicture").value(Base64Utils.encodeToString(DEFAULT_PROFILE_PICTURE)))
             .andExpect(jsonPath("$.accountType").value(DEFAULT_ACCOUNT_TYPE))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING));
+            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING))
+            .andExpect(jsonPath("$.smsService").value(DEFAULT_SMS_SERVICE.booleanValue()));
     }
 
     @Test
@@ -210,7 +218,8 @@ class ProfileResourceIT {
             .profilePicture(UPDATED_PROFILE_PICTURE)
             .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE)
             .accountType(UPDATED_ACCOUNT_TYPE)
-            .rating(UPDATED_RATING);
+            .rating(UPDATED_RATING)
+            .smsService(UPDATED_SMS_SERVICE);
 
         restProfileMockMvc
             .perform(
@@ -232,6 +241,7 @@ class ProfileResourceIT {
         assertThat(testProfile.getProfilePictureContentType()).isEqualTo(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
         assertThat(testProfile.getAccountType()).isEqualTo(UPDATED_ACCOUNT_TYPE);
         assertThat(testProfile.getRating()).isEqualTo(UPDATED_RATING);
+        assertThat(testProfile.getSmsService()).isEqualTo(UPDATED_SMS_SERVICE);
     }
 
     @Test
@@ -324,6 +334,7 @@ class ProfileResourceIT {
         assertThat(testProfile.getProfilePictureContentType()).isEqualTo(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE);
         assertThat(testProfile.getAccountType()).isEqualTo(UPDATED_ACCOUNT_TYPE);
         assertThat(testProfile.getRating()).isEqualTo(DEFAULT_RATING);
+        assertThat(testProfile.getSmsService()).isEqualTo(DEFAULT_SMS_SERVICE);
     }
 
     @Test
@@ -345,7 +356,8 @@ class ProfileResourceIT {
             .profilePicture(UPDATED_PROFILE_PICTURE)
             .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE)
             .accountType(UPDATED_ACCOUNT_TYPE)
-            .rating(UPDATED_RATING);
+            .rating(UPDATED_RATING)
+            .smsService(UPDATED_SMS_SERVICE);
 
         restProfileMockMvc
             .perform(
@@ -367,6 +379,7 @@ class ProfileResourceIT {
         assertThat(testProfile.getProfilePictureContentType()).isEqualTo(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
         assertThat(testProfile.getAccountType()).isEqualTo(UPDATED_ACCOUNT_TYPE);
         assertThat(testProfile.getRating()).isEqualTo(UPDATED_RATING);
+        assertThat(testProfile.getSmsService()).isEqualTo(UPDATED_SMS_SERVICE);
     }
 
     @Test

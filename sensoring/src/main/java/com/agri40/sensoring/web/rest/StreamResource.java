@@ -149,6 +149,8 @@ public class StreamResource {
         streamMap.put("cowId", result.getCowId());
         streamMap.put("userPhone", cow.get("userPhone"));
         streamMap.put("userId", cow.get("userId"));
+        streamMap.put("cowName", cow.get("cowName"));
+        streamMap.put("smsService", cow.get("smsService"));
 
         log.debug("StreamMap : {}", streamMap);
 
