@@ -20,6 +20,14 @@
     {
       "fieldName": "cowId",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "sender",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "receiver",
+      "fieldType": "String"
     }
   ],
   "microserviceName": "notification",

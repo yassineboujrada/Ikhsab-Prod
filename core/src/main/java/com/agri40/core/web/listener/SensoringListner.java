@@ -51,7 +51,7 @@ public class SensoringListner {
             Map<String, Object> data = new HashMap<>();
             data.put("room", "notification" + json.get("cowId"));
             // add random value to the json between 1 and 5 called group steps less than 5
-            data.put("groupSteps", (int) (Math.random() * 5 + 1));
+            data.put("groupSteps", ((Map<String, Object>)json.get("params")).get("groupSteps") );
             if (json.get("params") != null) {
                 Map<String, Object> params = (Map<String, Object>) json.get("params");
                 data.put("stepNumber", params.get("stepNumber"));
@@ -75,25 +75,40 @@ public class SensoringListner {
                         Map<String, Object> notification = new HashMap<>();
                         notification.put("content", "La vache " + json.get("cowId") + " est probablement en chaleur, merci de verifier");
                         notification.put("room", "notificationuser-1");
-                        notification.put("createdDateTime", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+                        notification.put("createdDateTime", json.get("createdAt"));
                         notification.put("type", "chaleur");
                         notification.put("cowId", json.get("cowId"));
                         String notificationId = (String) rabbitTemplate.convertSendAndReceive("icow.notification", notification);
                         notification.put("notificationId", notificationId);
                         Event event = new Event(notification);
                         eventPublisher.publishEvent(event);
+                        System.out.println("Notification sent");
                     } else {
                         data.put("cow_hot", false);
                     }
                 }
-                data.put("createdDateTime", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+                data.put("createdDateTime", json.get("createdAt"));
                 Event event = new Event(data);
                 eventPublisher.publishEvent(event);
+                System.out.println("Live stream sent");
                 return null;
             }
             Event event = new Event(json);
             eventPublisher.publishEvent(event);
         }
+        return null;
+    }
+
+    // listener for send notification to user
+    @RabbitListener(queues = { "icow.notification" })
+    public String receiveNotification(@Payload Map<String, Object> json) {
+        Map<String, Object> notification = new HashMap<>();
+        notification.put("content",
+        "La vache " + json.get("cowId") + " est probablement en chaleur, merci de verifier");
+        notification.put("room", "notificationuser-1");
+        notification.put("createdDateTime", json.get("createdAt"));
+        notification.put("type", "chaleur");
+        notification.put("cowId", json.get("cowId"));
         return null;
     }
 

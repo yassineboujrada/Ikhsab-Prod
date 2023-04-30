@@ -49,16 +49,16 @@ public class SensoringListner {
     }
 
     //    icow.deviceid
-    @RabbitListener(queues = { "icow.notification" })
-    public String receiver(Map<String, Object> data) {
-        // save notification in database
-        Notification notification = new Notification();
-        notification.setContent(data.get("content").toString());
-        notification.setCowId(data.get("cowId").toString());
-        notification.setDate(Instant.now());
-        notification.seen(false);
-        Notification result = notificationRepository.save(notification);
-        log.info("Notification saved in database");
-        return result.getId();
-    }
+    // @RabbitListener(queues = { "icow.notification" })
+    // public String receiver(Map<String, Object> data) {
+    //     // save notification in database
+    //     Notification notification = new Notification();
+    //     notification.setContent(data.get("content").toString());
+    //     notification.setCowId(data.get("cowId").toString());
+    //     notification.setDate(Instant.now());
+    //     notification.seen(false);
+    //     Notification result = notificationRepository.save(notification);
+    //     log.info("Notification saved in database");
+    //     return result.getId();
+    // }
 }

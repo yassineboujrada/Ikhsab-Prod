@@ -131,6 +131,9 @@ public class StreamResource {
             if (streams.size() > 1) {
                 streamMap.put("stepNumber1", streams.get(1).getParams().get("stepNumber"));
                 streamMap.put("stepNumber2", streams.get(0).getParams().get("stepNumber"));
+                Map<String, Object> params = stream.getParams();
+                params.put("groupSteps", (int) (Math.random() * 3 + 4));
+                stream.setParams(params);
             }
         } else if (stream.getType().equals("COLLAR")) {
             processCollarStream(stream);
@@ -264,7 +267,6 @@ public class StreamResource {
                     log.debug("===================== send message to the user =====================");
                     // queueSender.send("Numéro de vache : " + stream.getCowId() + " est en chaleur");
                     log.debug("Message sent to the queue");
-                    // rabbitTemplate.convertSendAndReceive("icow.notification", "Numéro de vache : " + stream.getCowId() + " est en chaleur");
                     log.debug("Message saved in the database");
                 }
             }
