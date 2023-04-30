@@ -50,7 +50,7 @@ public class SensoringListner {
             notification1.setContent("Your cow is a hot suspect");
             notification1.setCowId(data.get("cowId").toString());
             notification1.setSender("System");
-            notification1.setReceiver("notification"+data.get("userId"));
+            notification1.setReceiver(data.get("userId").toString());
             notification1.setDate(Instant.now());
             notification1.seen(false);
             Notification result = notificationRepository.save(notification1);
@@ -74,7 +74,7 @@ public class SensoringListner {
             // send sms
             if ((Boolean)data.get("smsService")){
             SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° " + data.get("cowName").toString()
-                    + " pourrait-être en chaleur. Merci de vérifier! 🙂", data.get("userPhone").toString());
+                    + " pourrait-être en chaleur. Merci de vérifier 🙂", data.get("userPhone").toString());
             log.info("////////////     SMS sent     ////////////");
             }
             else

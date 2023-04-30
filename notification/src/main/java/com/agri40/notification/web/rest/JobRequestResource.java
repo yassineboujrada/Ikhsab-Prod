@@ -258,7 +258,7 @@ public class JobRequestResource {
 
     // change status of job request
     @GetMapping("/job-requests/change-status/{id}/{status}")
-    public ResponseEntity<JobRequest> changeStatus(@PathVariable String id, @PathVariable String status, @PathVariable String receiver, @PathVariable String message) {
+    public ResponseEntity<JobRequest> changeStatus(@PathVariable String id, @PathVariable String status, @RequestParam String message, @RequestParam String receiver) {
         log.debug("REST request to get JobRequest : {}", id);
         Optional<JobRequest> jobRequest = jobRequestRepository.findById(id);
         
