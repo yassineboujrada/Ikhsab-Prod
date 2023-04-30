@@ -30,6 +30,12 @@ public class Notification implements Serializable {
     @Field("cow_id")
     private String cowId;
 
+    @Field("sender")
+    private String sender;
+
+    @Field("receiver")
+    private String receiver;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -97,6 +103,32 @@ public class Notification implements Serializable {
         this.cowId = cowId;
     }
 
+    public String getSender() {
+        return this.sender;
+    }
+
+    public Notification sender(String sender) {
+        this.setSender(sender);
+        return this;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getReceiver() {
+        return this.receiver;
+    }
+
+    public Notification receiver(String receiver) {
+        this.setReceiver(receiver);
+        return this;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -125,6 +157,8 @@ public class Notification implements Serializable {
             ", seen='" + getSeen() + "'" +
             ", content='" + getContent() + "'" +
             ", cowId='" + getCowId() + "'" +
+            ", sender='" + getSender() + "'" +
+            ", receiver='" + getReceiver() + "'" +
             "}";
     }
 }

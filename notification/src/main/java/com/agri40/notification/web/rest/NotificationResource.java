@@ -136,6 +136,15 @@ public class NotificationResource {
                 if (notification.getContent() != null) {
                     existingNotification.setContent(notification.getContent());
                 }
+                if (notification.getCowId() != null) {
+                    existingNotification.setCowId(notification.getCowId());
+                }
+                if (notification.getSender() != null) {
+                    existingNotification.setSender(notification.getSender());
+                }
+                if (notification.getReceiver() != null) {
+                    existingNotification.setReceiver(notification.getReceiver());
+                }
 
                 return existingNotification;
             })
