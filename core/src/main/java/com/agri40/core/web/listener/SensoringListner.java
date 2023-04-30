@@ -50,8 +50,8 @@ public class SensoringListner {
         if (json.get("type").equals("PEDOMETRE")) {
             Map<String, Object> data = new HashMap<>();
             data.put("room", "notification" + json.get("cowId"));
-            // add random value to the json between 5 and 15 called group steps
-            data.put("groupSteps", (int) (Math.random() * (1)) + 3);
+            // add random value to the json between 1 and 5 called group steps less than 5
+            data.put("groupSteps", (int) (Math.random() * 5 + 1));
             if (json.get("params") != null) {
                 Map<String, Object> params = (Map<String, Object>) json.get("params");
                 data.put("stepNumber", params.get("stepNumber"));
@@ -72,13 +72,13 @@ public class SensoringListner {
                         // SendSMSMessage("la vache avec l'étiquette "+ json.get("cowId") +" pourrait être en chaleur, merci de vérifier",json.get("userPhone").toString());
                         // json.get("cowId");
                         // rabbitTemplate.convertAndSend("icow.cowChaleur", json.get("cowId"));
-                        String notificationId = (String) rabbitTemplate.convertSendAndReceive("icow.notification", json.get("cowId"));
                         Map<String, Object> notification = new HashMap<>();
                         notification.put("content", "La vache " + json.get("cowId") + " est probablement en chaleur, merci de verifier");
                         notification.put("room", "notificationuser-1");
                         notification.put("createdDateTime", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
                         notification.put("type", "chaleur");
                         notification.put("cowId", json.get("cowId"));
+                        String notificationId = (String) rabbitTemplate.convertSendAndReceive("icow.notification", notification);
                         notification.put("notificationId", notificationId);
                         Event event = new Event(notification);
                         eventPublisher.publishEvent(event);
