@@ -127,6 +127,9 @@ public class StreamResource {
 
         
         Map<String, Object> cowAndProfileData = (Map<String, Object>) rabbitTemplate.convertSendAndReceive("icow.deviceid",stream.getDeviceId());
+        if (cowAndProfileData == null) {
+            throw new BadRequestAlertException("Invalid device id", ENTITY_NAME, "invaliddeviceid");
+        }
         stream.setCowId((String) cowAndProfileData.get("cowId"));
         if (stream.getType().equals("PEDOMETRE")) {
             processPedometerStream(stream);

@@ -51,7 +51,8 @@ public class SensoringListner {
         //get cow by rf id or collar id or pedometre id
         Optional<com.agri40.management.domain.Cow> cow = cowRepository.findByRfidOrCollarOrPedometre(deviceid, deviceid, deviceid);
         if (!cow.isPresent()) {
-            throw new BadRequestAlertException("The Device Is Not Connected To Any Cow", ENTITY_NAME, "id null");
+            // throw new BadRequestAlertException("The Device Is Not Connected To Any Cow", ENTITY_NAME, "id null");
+            return null;
         }
         Cow cow1 = cow.get();
         Map<String, Object> cowMap = new HashMap<>();
@@ -60,7 +61,8 @@ public class SensoringListner {
         Optional<com.agri40.management.domain.Profile> profile = profileRepository.findByUserId(cow1.getUserId());
         
         if (!profile.isPresent()) {
-            throw new BadRequestAlertException("The Cow Is Not Connected To Any User", ENTITY_NAME, "id null");
+            // throw new BadRequestAlertException("The Cow Is Not Connected To Any User", ENTITY_NAME, "id null");
+            return null;
         }
         Profile profile1 = profile.get();
         cowMap.put("userPhone", profile1.getPhoneNumber());
