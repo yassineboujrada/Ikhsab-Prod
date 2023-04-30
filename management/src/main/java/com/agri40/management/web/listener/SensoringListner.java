@@ -61,6 +61,7 @@ public class SensoringListner {
             throw new BadRequestAlertException("The Cow Is Not Connected To Any User", ENTITY_NAME, "id null");
         }
         cowMap.put("userPhone", profile.get().getPhoneNumber());
+        cowMap.put("userID", cow.get().getUserId());
         return cowMap;
     }
 

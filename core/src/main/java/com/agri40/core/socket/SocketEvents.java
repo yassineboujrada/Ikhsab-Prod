@@ -33,8 +33,18 @@ public class SocketEvents {
         // send to all clients
         for (SocketIOClient client : socketIOServer.getAllClients()) {
             System.out.println("------ " + client.getAllRooms().size());
+
+            // print rooms
+            for (String room : client.getAllRooms()) {
+                System.out.println("room: " + room);
+            }
+
             // check if the client is in the room
-            client.sendEvent("notification_received", msg);
+
+            if (client.getAllRooms().contains(msg.get("room").toString())) {
+                client.sendEvent("notification_received", msg);
+            }
+            // client.sendEvent("notification_received", msg);
         }
         // System.out.println(x.getClients());
     }

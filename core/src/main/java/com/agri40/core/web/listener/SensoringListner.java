@@ -55,7 +55,7 @@ public class SensoringListner {
             if (json.get("params") != null) {
                 Map<String, Object> params = (Map<String, Object>) json.get("params");
                 data.put("stepNumber", params.get("stepNumber"));
-                data.put("cow_high", Integer.parseInt(params.get("stepNumber").toString()) > 5);
+                data.put("cow_high", Integer.parseInt(params.get("stepNumber").toString()) > ((Integer)data.get("groupSteps")+5) );
                 if (json.get("stepNumber1") != null && json.get("stepNumber2") != null) {
                     log.info(
                         "last stepNbr {} , stepNbr1 {} , stepNbr2 {}",
@@ -74,11 +74,13 @@ public class SensoringListner {
                         // rabbitTemplate.convertAndSend("icow.cowChaleur", json.get("cowId"));
                         Map<String, Object> notification = new HashMap<>();
                         notification.put("content", "La vache " + json.get("cowId") + " est probablement en chaleur, merci de verifier");
-                        notification.put("room", "notificationuser-1");
+                        // TODO: get real id
+                        notification.put("room", "notification"+json.get("userId"));
                         notification.put("createdDateTime", json.get("createdAt"));
                         notification.put("type", "chaleur");
                         notification.put("cowId", json.get("cowId"));
-                        String notificationId = (String) rabbitTemplate.convertSendAndReceive("icow.notification", notification);
+                        notification.put("receiver", json.get("userId"));
+                        String notificationId = (String) rabbitTemplate.convertSendAndReceive("icow.save-notification", notification);
                         notification.put("notificationId", notificationId);
                         Event event = new Event(notification);
                         eventPublisher.publishEvent(event);
@@ -101,14 +103,16 @@ public class SensoringListner {
 
     // listener for send notification to user
     @RabbitListener(queues = { "icow.notification" })
-    public String receiveNotification(@Payload Map<String, Object> json) {
+    public String receiveNotification(@Payload Map<String, Object> data) {
         Map<String, Object> notification = new HashMap<>();
-        notification.put("content",
-        "La vache " + json.get("cowId") + " est probablement en chaleur, merci de verifier");
-        notification.put("room", "notificationuser-1");
-        notification.put("createdDateTime", json.get("createdAt"));
-        notification.put("type", "chaleur");
-        notification.put("cowId", json.get("cowId"));
+        notification.put("content",data.get("content"));
+        notification.put("room", "notification" + data.get("receiver"));
+        notification.put("createdDateTime", data.get("createdDateTime"));
+        notification.put("type", data.get("type"));
+        notification.put("cowId", data.get("cowId"));
+        notification.put("receiver", data.get("receiver"));
+        Event event = new Event(notification);
+        eventPublisher.publishEvent(event);
         return null;
     }
 

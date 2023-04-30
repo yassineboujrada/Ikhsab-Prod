@@ -148,6 +148,7 @@ public class StreamResource {
         streamMap.put("params", result.getParams());
         streamMap.put("cowId", result.getCowId());
         streamMap.put("userPhone", cow.get("userPhone"));
+        streamMap.put("userId", cow.get("userId"));
 
         rabbitTemplate.convertSendAndReceive("icow.live-stream", streamMap);
         return ResponseEntity

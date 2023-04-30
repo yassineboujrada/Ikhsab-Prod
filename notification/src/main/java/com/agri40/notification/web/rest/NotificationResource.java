@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +40,9 @@ public class NotificationResource {
 
     private final NotificationRepository notificationRepository;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     public NotificationResource(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
@@ -55,6 +60,7 @@ public class NotificationResource {
         if (notification.getId() != null) {
             throw new BadRequestAlertException("A new notification cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        // if recipient is not null, send notification to rabbitmq
         Notification result = notificationRepository.save(notification);
         return ResponseEntity
             .created(new URI("/api/notifications/" + result.getId()))

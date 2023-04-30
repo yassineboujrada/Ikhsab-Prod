@@ -1,10 +1,12 @@
 package com.agri40.notification.web.rest;
 
 import com.agri40.notification.domain.JobRequest;
+import com.agri40.notification.domain.Notification;
 import com.agri40.notification.repository.JobRequestRepository;
 import com.agri40.notification.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -60,7 +62,24 @@ public class JobRequestResource {
         if (jobRequest.getId() != null) {
             throw new BadRequestAlertException("A new jobRequest cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (jobRequest.getProvider() == null) {
+            throw new BadRequestAlertException("A new jobRequest must have a provider", ENTITY_NAME, "idexists");
+        }
+        if (jobRequest.getConsumer() == null) {
+            throw new BadRequestAlertException("A new jobRequest must have a consumer", ENTITY_NAME, "idexists");
+        }
+        if (jobRequest.getCowId() == null) {
+            throw new BadRequestAlertException("A new jobRequest must have a cowId", ENTITY_NAME, "idexists");
+        }
         JobRequest result = jobRequestRepository.save(jobRequest);
+        Notification notification = new Notification();
+        notification.content("Provider " + result.getProvider() + " has confirmed your request");
+        notification.setCowId(result.getCowId());
+        notification.setDate(Instant.now());
+        notification.setReceiver(result.getConsumer());
+        notification.setSender(result.getProvider());
+        notification.setSeen(false);
+        rabbitTemplate.convertSendAndReceive("icow.notification", notification);
         return ResponseEntity
             .created(new URI("/api/job-requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -200,6 +219,17 @@ public class JobRequestResource {
     public ResponseEntity<List<JobRequest>> getConfirmedJobRequests(@PathVariable String id) {
         log.debug("REST request to get a page of JobRequests");
         List<JobRequest> jobRequests = jobRequestRepository.findAllByProviderOrConsumerAndServiceStatus(id, id, "CONFIRMED");
+        // from jobRequestscreate notifi to consumer
+        JobRequest result = jobRequests.get(0);
+        Notification notification = new Notification();
+        notification.content("Provider " + result.getProvider() + " has confirmed your request");
+        notification.setCowId(result.getCowId());
+        notification.setDate(Instant.now());
+        notification.setReceiver(result.getProvider());
+        notification.setSender(result.getConsumer());
+        notification.setSeen(false);
+        rabbitTemplate.convertSendAndReceive("icow.notification", notification);
+
         return ResponseEntity.ok().body(jobRequests);
     }
 

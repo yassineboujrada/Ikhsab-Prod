@@ -37,4 +37,13 @@ public class RabbitMQConfig {
                 new Binding("icow.notification", Binding.DestinationType.QUEUE, "icow.exchange", "Icow-routing-key",
                         null));
     }
+
+    @Bean
+    public Declarables G() {
+        return new Declarables(
+                new DirectExchange("icow.exchange"),
+                new Queue("icow.save-notification"),
+                new Binding("icow.save-notification", Binding.DestinationType.QUEUE, "icow.exchange", "Icow-routing-key",
+                        null));
+    }
 }
