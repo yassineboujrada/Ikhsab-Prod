@@ -16,6 +16,10 @@
       "fieldName": "content",
       "fieldType": "String",
       "fieldValidateRules": []
+    },
+    {
+      "fieldName": "cowId",
+      "fieldType": "String"
     }
   ],
   "microserviceName": "notification",

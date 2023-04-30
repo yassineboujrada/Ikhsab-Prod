@@ -37,6 +37,9 @@ class NotificationResourceIT {
     private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
     private static final String UPDATED_CONTENT = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COW_ID = "AAAAAAAAAA";
+    private static final String UPDATED_COW_ID = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/notifications";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -55,7 +58,7 @@ class NotificationResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Notification createEntity() {
-        Notification notification = new Notification().date(DEFAULT_DATE).seen(DEFAULT_SEEN).content(DEFAULT_CONTENT);
+        Notification notification = new Notification().date(DEFAULT_DATE).seen(DEFAULT_SEEN).content(DEFAULT_CONTENT).cowId(DEFAULT_COW_ID);
         return notification;
     }
 
@@ -66,7 +69,7 @@ class NotificationResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Notification createUpdatedEntity() {
-        Notification notification = new Notification().date(UPDATED_DATE).seen(UPDATED_SEEN).content(UPDATED_CONTENT);
+        Notification notification = new Notification().date(UPDATED_DATE).seen(UPDATED_SEEN).content(UPDATED_CONTENT).cowId(UPDATED_COW_ID);
         return notification;
     }
 
@@ -91,6 +94,7 @@ class NotificationResourceIT {
         assertThat(testNotification.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testNotification.getSeen()).isEqualTo(DEFAULT_SEEN);
         assertThat(testNotification.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testNotification.getCowId()).isEqualTo(DEFAULT_COW_ID);
     }
 
     @Test
@@ -123,7 +127,8 @@ class NotificationResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(notification.getId())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].seen").value(hasItem(DEFAULT_SEEN.booleanValue())))
-            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)));
+            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)))
+            .andExpect(jsonPath("$.[*].cowId").value(hasItem(DEFAULT_COW_ID)));
     }
 
     @Test
@@ -139,7 +144,8 @@ class NotificationResourceIT {
             .andExpect(jsonPath("$.id").value(notification.getId()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.seen").value(DEFAULT_SEEN.booleanValue()))
-            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT));
+            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT))
+            .andExpect(jsonPath("$.cowId").value(DEFAULT_COW_ID));
     }
 
     @Test
@@ -157,7 +163,7 @@ class NotificationResourceIT {
 
         // Update the notification
         Notification updatedNotification = notificationRepository.findById(notification.getId()).get();
-        updatedNotification.date(UPDATED_DATE).seen(UPDATED_SEEN).content(UPDATED_CONTENT);
+        updatedNotification.date(UPDATED_DATE).seen(UPDATED_SEEN).content(UPDATED_CONTENT).cowId(UPDATED_COW_ID);
 
         restNotificationMockMvc
             .perform(
@@ -174,6 +180,7 @@ class NotificationResourceIT {
         assertThat(testNotification.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testNotification.getSeen()).isEqualTo(UPDATED_SEEN);
         assertThat(testNotification.getContent()).isEqualTo(UPDATED_CONTENT);
+        assertThat(testNotification.getCowId()).isEqualTo(UPDATED_COW_ID);
     }
 
     @Test
@@ -240,7 +247,7 @@ class NotificationResourceIT {
         Notification partialUpdatedNotification = new Notification();
         partialUpdatedNotification.setId(notification.getId());
 
-        partialUpdatedNotification.content(UPDATED_CONTENT);
+        partialUpdatedNotification.content(UPDATED_CONTENT).cowId(UPDATED_COW_ID);
 
         restNotificationMockMvc
             .perform(
@@ -257,6 +264,7 @@ class NotificationResourceIT {
         assertThat(testNotification.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testNotification.getSeen()).isEqualTo(DEFAULT_SEEN);
         assertThat(testNotification.getContent()).isEqualTo(UPDATED_CONTENT);
+        assertThat(testNotification.getCowId()).isEqualTo(UPDATED_COW_ID);
     }
 
     @Test
@@ -270,7 +278,7 @@ class NotificationResourceIT {
         Notification partialUpdatedNotification = new Notification();
         partialUpdatedNotification.setId(notification.getId());
 
-        partialUpdatedNotification.date(UPDATED_DATE).seen(UPDATED_SEEN).content(UPDATED_CONTENT);
+        partialUpdatedNotification.date(UPDATED_DATE).seen(UPDATED_SEEN).content(UPDATED_CONTENT).cowId(UPDATED_COW_ID);
 
         restNotificationMockMvc
             .perform(
@@ -287,6 +295,7 @@ class NotificationResourceIT {
         assertThat(testNotification.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testNotification.getSeen()).isEqualTo(UPDATED_SEEN);
         assertThat(testNotification.getContent()).isEqualTo(UPDATED_CONTENT);
+        assertThat(testNotification.getCowId()).isEqualTo(UPDATED_COW_ID);
     }
 
     @Test

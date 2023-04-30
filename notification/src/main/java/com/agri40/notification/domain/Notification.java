@@ -27,6 +27,9 @@ public class Notification implements Serializable {
     @Field("content")
     private String content;
 
+    @Field("cow_id")
+    private String cowId;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -81,6 +84,19 @@ public class Notification implements Serializable {
         this.content = content;
     }
 
+    public String getCowId() {
+        return this.cowId;
+    }
+
+    public Notification cowId(String cowId) {
+        this.setCowId(cowId);
+        return this;
+    }
+
+    public void setCowId(String cowId) {
+        this.cowId = cowId;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -108,6 +124,7 @@ public class Notification implements Serializable {
             ", date='" + getDate() + "'" +
             ", seen='" + getSeen() + "'" +
             ", content='" + getContent() + "'" +
+            ", cowId='" + getCowId() + "'" +
             "}";
     }
 }
