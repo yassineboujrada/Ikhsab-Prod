@@ -1,0 +1,13 @@
+{
+  "generator-jhipster": {
+    "appsFolders": ["core", "management", "sensoring"],
+    "clusteredDbApps": [],
+    "deploymentType": "docker-compose",
+    "directoryPath": "../",
+    "dockerRepositoryName": "bellaabdelouahab",
+    "gatewayType": "SpringCloudGateway",
+    "jwtSecretKey": "OGZkNjZkNTBmMjNlNWI4YzAwYTZkYTRkMGIxNmRhMzNmOWJmOTU0MjdhMDUxN2MxYmRiNmRiOWRmYmE1OTBlZWQ0NGNiMDAwMjllNWUyMDAyMWM2MmYzMDM3NmY1YjcyNjEwZA==",
+    "monitoring": "no",
+    "serviceDiscoveryType": "eureka"
+  }
+}

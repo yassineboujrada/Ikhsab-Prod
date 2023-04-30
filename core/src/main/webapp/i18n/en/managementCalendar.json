@@ -1,0 +1,36 @@
+{
+  "coreApp": {
+    "managementCalendar": {
+      "home": {
+        "title": "Calendars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Calendar",
+        "createOrEditLabel": "Create or edit a Calendar",
+        "notFound": "No Calendars found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Calendar {{ id }}?"
+      },
+      "detail": {
+        "title": "Calendar"
+      },
+      "id": "ID",
+      "lactation": "Lactation",
+      "jrsLact": "Jrs Lact",
+      "statutReproduction": "Statut Reproduction",
+      "etatProd": "Etat Prod",
+      "dateNaissance": "Date Naissance",
+      "velage": "Velage",
+      "chaleur": "Chaleur",
+      "insemination": "Insemination",
+      "cowId": "Cow Id"
+    }
+  },
+  "managementApp": {
+    "managementCalendar": {
+      "created": "A new Calendar is created with identifier {{ param }}",
+      "updated": "A Calendar is updated with identifier {{ param }}",
+      "deleted": "A Calendar is deleted with identifier {{ param }}"
+    }
+  }
+}

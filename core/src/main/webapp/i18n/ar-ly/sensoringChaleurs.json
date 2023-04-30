@@ -1,0 +1,39 @@
+{
+  "coreApp": {
+    "sensoringChaleurs": {
+      "home": {
+        "title": "Chaleurs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Chaleurs",
+        "createOrEditLabel": "Create or edit a Chaleurs",
+        "notFound": "No Chaleurs found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Chaleurs {{ id }}?"
+      },
+      "detail": {
+        "title": "Chaleurs"
+      },
+      "id": "ID",
+      "date": "Date",
+      "jrsLact": "Jrs Lact",
+      "temps": "Temps",
+      "groupeid": "Groupeid",
+      "enclosid": "Enclosid",
+      "activite": "Activite",
+      "facteurEleve": "Facteur Eleve",
+      "suspect": "Suspect",
+      "actAugmentee": "Act Augmentee",
+      "alarmeChaleur": "Alarme Chaleur",
+      "pasDeChaleur": "Pas De Chaleur",
+      "cowId": "Cow Id"
+    }
+  },
+  "sensoringApp": {
+    "sensoringChaleurs": {
+      "created": "A new Chaleurs is created with identifier {{ param }}",
+      "updated": "A Chaleurs is updated with identifier {{ param }}",
+      "deleted": "A Chaleurs is deleted with identifier {{ param }}"
+    }
+  }
+}

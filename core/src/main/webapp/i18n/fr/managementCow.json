@@ -1,0 +1,34 @@
+{
+  "coreApp": {
+    "managementCow": {
+      "home": {
+        "title": "Cows",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Cow",
+        "createOrEditLabel": "Créer ou éditer un Cow",
+        "notFound": "Aucun Cow trouvé"
+      },
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Cow {{ id }} ?"
+      },
+      "detail": {
+        "title": "Cow"
+      },
+      "id": "ID",
+      "numero": "Numero",
+      "groupeId": "Groupe Id",
+      "enclosId": "Enclos Id",
+      "repondeur": "Repondeur",
+      "nom": "Nom",
+      "deviceId": "Device Id",
+      "userId": "User Id"
+    }
+  },
+  "managementApp": {
+    "managementCow": {
+      "created": "Un nouveau Cow a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Cow avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Cow avec l'identifiant {{ param }} a été supprimé"
+    }
+  }
+}

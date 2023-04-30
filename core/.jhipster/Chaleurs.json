@@ -1,0 +1,67 @@
+{
+  "applications": ["core", "sensoring"],
+  "changelogDate": "20230416153410",
+  "clientRootFolder": "sensoring",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "chaleurs",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "jrsLact",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "temps",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "groupeid",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "enclosid",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "activite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "facteurEleve",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "suspect",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actAugmentee",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "alarmeChaleur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pasDeChaleur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cowId",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "sensoring",
+  "name": "Chaleurs",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

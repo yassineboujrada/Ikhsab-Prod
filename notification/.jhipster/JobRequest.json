@@ -1,0 +1,39 @@
+{
+  "applications": ["core", "notification"],
+  "changelogDate": "20230416153310",
+  "clientRootFolder": "notification",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "job_request",
+  "fields": [
+    {
+      "fieldName": "consumer",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "provider",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "serviceStatus",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "roomId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cowId",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "notification",
+  "name": "JobRequest",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

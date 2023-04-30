@@ -1,0 +1,55 @@
+{
+  "applications": ["core", "management"],
+  "changelogDate": "20230416153310",
+  "clientRootFolder": "management",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "calendar",
+  "fields": [
+    {
+      "fieldName": "lactation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jrsLact",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statutReproduction",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "etatProd",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateNaissance",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "velage",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "chaleur",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "insemination",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "cowId",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "management",
+  "name": "Calendar",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

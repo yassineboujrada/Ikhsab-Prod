@@ -1,0 +1,44 @@
+{
+  "applications": ["core", "notification"],
+  "changelogDate": "20230416153410",
+  "clientRootFolder": "notification",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "message",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDateTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "messageType",
+      "fieldType": "MessageType",
+      "fieldValues": "CLIENT,SERVER"
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "room",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "username",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "notification",
+  "name": "Message",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

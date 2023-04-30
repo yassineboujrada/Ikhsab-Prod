@@ -1,0 +1,30 @@
+{
+  "coreApp": {
+    "managementEnclos": {
+      "home": {
+        "title": "Enclos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Enclos",
+        "createOrEditLabel": "Create or edit a Enclos",
+        "notFound": "No Enclos found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Enclos {{ id }}?"
+      },
+      "detail": {
+        "title": "Enclos"
+      },
+      "id": "Id",
+      "name": "Name",
+      "userId": "User Id",
+      "groupId": "Group Id"
+    }
+  },
+  "managementApp": {
+    "managementEnclos": {
+      "created": "A new Enclos is created with identifier {{ param }}",
+      "updated": "A Enclos is updated with identifier {{ param }}",
+      "deleted": "A Enclos is deleted with identifier {{ param }}"
+    }
+  }
+}

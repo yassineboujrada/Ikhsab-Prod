@@ -1,0 +1,39 @@
+{
+  "applications": ["core", "sensoring"],
+  "changelogDate": "20230416154110",
+  "clientRootFolder": "sensoring",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "sante",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dureePositionCouchee",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "leve",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pas",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cowId",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "sensoring",
+  "name": "Sante",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

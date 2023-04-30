@@ -1,0 +1,32 @@
+{
+  "coreApp": {
+    "sensoringSante": {
+      "home": {
+        "title": "Santes",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Sante",
+        "createOrEditLabel": "Créer ou éditer un Sante",
+        "notFound": "Aucun Sante trouvé"
+      },
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Sante {{ id }} ?"
+      },
+      "detail": {
+        "title": "Sante"
+      },
+      "id": "ID",
+      "date": "Date",
+      "dureePositionCouchee": "Duree Position Couchee",
+      "leve": "Leve",
+      "pas": "Pas",
+      "cowId": "Cow Id"
+    }
+  },
+  "sensoringApp": {
+    "sensoringSante": {
+      "created": "Un nouveau Sante a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Sante avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Sante avec l'identifiant {{ param }} a été supprimé"
+    }
+  }
+}

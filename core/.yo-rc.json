@@ -1,0 +1,67 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 0,
+    "applicationType": "gateway",
+    "applications": {
+      "management": {
+        "applicationIndex": 2,
+        "clientFramework": "no",
+        "serverPort": "8002"
+      },
+      "notification": {
+        "applicationIndex": 3,
+        "clientFramework": "no",
+        "serverPort": "8002"
+      },
+      "sensoring": {
+        "applicationIndex": 1,
+        "clientFramework": "no",
+        "serverPort": "8003"
+      }
+    },
+    "authenticationType": "jwt",
+    "baseName": "core",
+    "blueprints": [],
+    "buildTool": "maven",
+    "cacheProvider": "no",
+    "clientFramework": "react",
+    "clientPackageManager": "npm",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1681659130245,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "devServerPort": 9060,
+    "dtoSuffix": "DTO",
+    "enableGradleEnterprise": false,
+    "enableHibernateCache": false,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "entities": ["Calendar", "Chaleurs", "Cow", "Enclos", "Groups", "JobRequest", "Message", "Profile", "Sante", "Sensoring", "Stream"],
+    "entitySuffix": "",
+    "gradleEnterpriseHost": "",
+    "jhiPrefix": "jhi",
+    "jhipsterVersion": "7.9.3",
+    "jwtSecretKey": "YzM1ZDAxNjMwYzIyYTM5Yjk2YTdhYjljYmJhMzVlNjlmN2MyM2RmMDhmMzNhODQ3YjUzNDM5NjEwZGQwMTYyNzdhYTJkMDhiYmIzNTdmOWNhMGVkNzQ3OWJiM2FlOTdhY2RkOWJmMTVlOGVkZGQxMThhYzgzZWQwOTJkMGIwNmU=",
+    "languages": ["en", "fr", "ar-ly"],
+    "lastLiquibaseTimestamp": 1681659790000,
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "otherModules": [],
+    "packageFolder": "com/agri40/core",
+    "packageName": "com.agri40.core",
+    "pages": [],
+    "prodDatabaseType": "mongodb",
+    "reactive": true,
+    "searchEngine": false,
+    "serverPort": "8001",
+    "serviceDiscoveryType": "eureka",
+    "skipCheckLengthOfIdentifier": false,
+    "skipClient": false,
+    "skipFakeData": false,
+    "skipUserManagement": false,
+    "testFrameworks": [],
+    "websocket": false,
+    "withAdminUi": true
+  }
+}

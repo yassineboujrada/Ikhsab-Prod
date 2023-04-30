@@ -1,0 +1,30 @@
+{
+  "coreApp": {
+    "managementGroups": {
+      "home": {
+        "title": "Groups",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Groups",
+        "createOrEditLabel": "Create or edit a Groups",
+        "notFound": "No Groups found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Groups {{ id }}?"
+      },
+      "detail": {
+        "title": "Groups"
+      },
+      "id": "Id",
+      "name": "Name",
+      "userId": "User Id",
+      "gpsAdress": "Gps Adress"
+    }
+  },
+  "managementApp": {
+    "managementGroups": {
+      "created": "A new Groups is created with identifier {{ param }}",
+      "updated": "A Groups is updated with identifier {{ param }}",
+      "deleted": "A Groups is deleted with identifier {{ param }}"
+    }
+  }
+}

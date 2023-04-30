@@ -1,0 +1,32 @@
+{
+  "coreApp": {
+    "sensoringSante": {
+      "home": {
+        "title": "Santes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Sante",
+        "createOrEditLabel": "Create or edit a Sante",
+        "notFound": "No Santes found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Sante {{ id }}?"
+      },
+      "detail": {
+        "title": "Sante"
+      },
+      "id": "ID",
+      "date": "Date",
+      "dureePositionCouchee": "Duree Position Couchee",
+      "leve": "Leve",
+      "pas": "Pas",
+      "cowId": "Cow Id"
+    }
+  },
+  "sensoringApp": {
+    "sensoringSante": {
+      "created": "A new Sante is created with identifier {{ param }}",
+      "updated": "A Sante is updated with identifier {{ param }}",
+      "deleted": "A Sante is deleted with identifier {{ param }}"
+    }
+  }
+}

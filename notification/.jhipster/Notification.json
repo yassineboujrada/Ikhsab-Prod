@@ -1,0 +1,27 @@
+{
+  "changelogDate": "20230425100025",
+  "clientRootFolder": "notification",
+  "databaseType": "mongodb",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "seen",
+      "fieldType": "Boolean",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    }
+  ],
+  "microserviceName": "notification",
+  "name": "Notification",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

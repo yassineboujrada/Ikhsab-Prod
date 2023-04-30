@@ -1,0 +1,31 @@
+{
+  "coreApp": {
+    "notificationJobRequest": {
+      "home": {
+        "title": "JobRequests",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Job Request",
+        "createOrEditLabel": "Créer ou éditer un Job Request",
+        "notFound": "Aucun Job Request trouvé"
+      },
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Job Request {{ id }} ?"
+      },
+      "detail": {
+        "title": "Job Request"
+      },
+      "id": "ID",
+      "consumer": "Consumer",
+      "provider": "Provider",
+      "serviceStatus": "Service Status",
+      "roomId": "Room Id"
+    }
+  },
+  "notificationApp": {
+    "notificationJobRequest": {
+      "created": "Un nouveau Job Request a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Job Request avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Job Request avec l'identifiant {{ param }} a été supprimé"
+    }
+  }
+}

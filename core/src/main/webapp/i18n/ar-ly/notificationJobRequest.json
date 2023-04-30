@@ -1,0 +1,31 @@
+{
+  "coreApp": {
+    "notificationJobRequest": {
+      "home": {
+        "title": "Job Requests",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Job Request",
+        "createOrEditLabel": "Create or edit a Job Request",
+        "notFound": "No Job Requests found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Job Request {{ id }}?"
+      },
+      "detail": {
+        "title": "Job Request"
+      },
+      "id": "ID",
+      "consumer": "Consumer",
+      "provider": "Provider",
+      "serviceStatus": "Service Status",
+      "roomId": "Room Id"
+    }
+  },
+  "notificationApp": {
+    "notificationJobRequest": {
+      "created": "A new Job Request is created with identifier {{ param }}",
+      "updated": "A Job Request is updated with identifier {{ param }}",
+      "deleted": "A Job Request is deleted with identifier {{ param }}"
+    }
+  }
+}

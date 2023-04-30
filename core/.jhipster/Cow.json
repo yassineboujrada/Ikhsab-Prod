@@ -1,0 +1,47 @@
+{
+  "applications": ["core", "management"],
+  "changelogDate": "20230416153510",
+  "clientRootFolder": "management",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "cow",
+  "fields": [
+    {
+      "fieldName": "numero",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "groupeId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "enclosId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "repondeur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "deviceId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "userId",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "management",
+  "name": "Cow",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

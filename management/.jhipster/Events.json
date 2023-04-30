@@ -1,0 +1,26 @@
+{
+  "changelogDate": "20230425083903",
+  "clientRootFolder": "management",
+  "databaseType": "mongodb",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "cowId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "EventType",
+      "fieldValues": "CHALEUR,ENSIMINE"
+    }
+  ],
+  "microserviceName": "management",
+  "name": "Events",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

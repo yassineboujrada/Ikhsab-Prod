@@ -1,0 +1,9 @@
+{
+  "coreApp": {
+    "MessageType": {
+      "null": "",
+      "CLIENT": "CLIENT",
+      "SERVER": "SERVER"
+    }
+  }
+}
