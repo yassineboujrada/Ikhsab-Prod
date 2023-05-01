@@ -74,13 +74,14 @@ public class JobRequestResource {
             throw new BadRequestAlertException("A new jobRequest must have a cowId", ENTITY_NAME, "idexists");
         }
         JobRequest result = jobRequestRepository.save(jobRequest);
-        Notification notification = new Notification();
-        notification.content("Provider " + result.getProvider() + " has confirmed your request");
-        notification.setCowId(result.getCowId());
-        notification.setDate(Instant.now());
-        notification.setReceiver(result.getConsumer());
-        notification.setSender(result.getProvider());
-        notification.setSeen(false);
+        Map<String, Object> notification = new HashMap<>();
+        notification.put("content", "You have a new job request");
+        notification.put("cowId", result.getCowId());
+        notification.put("date", Instant.now().toString());
+        notification.put("receiver", result.getProvider());
+        notification.put("sender", result.getConsumer());
+        notification.put("seen", false);
+
         rabbitTemplate.convertSendAndReceive("icow.notification", notification);
         return ResponseEntity
             .created(new URI("/api/job-requests/" + result.getId()))
@@ -269,7 +270,7 @@ public class JobRequestResource {
             Map<String, Object> notification = new HashMap<>();
             notification.put("content", message);
             notification.put("room", "notification" + receiver);
-            notification.put("createdDateTime", Instant.now());
+            notification.put("createdDateTime", Instant.now().toString());
             notification.put("type", "JOB_REQUEST");
             notification.put("cowId", result.getCowId());
             notification.put("receiver", receiver);
