@@ -73,8 +73,20 @@ public class SensoringListner {
 
             // send sms
             if ((Boolean)data.get("smsService")){
-            SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° " + data.get("cowName").toString()
-                    + " pourrait-être en chaleur. Merci de vérifier 🙂", data.get("userPhone").toString());
+                SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° " + data.get("cowName").toString()
+                        + " pourrait-être en chaleur. Merci de vérifier 🙂", "0627049227");
+
+                SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° " + data.get("cowName").toString()
+                        + " pourrait-être en chaleur. Merci de vérifier 🙂", "0677894124");
+
+                SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° " + data.get("cowName").toString()
+                        + " pourrait-être en chaleur. Merci de vérifier 🙂", "0672820760");
+
+                        SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° " + data.get("cowName").toString()
+                        + " pourrait-être en chaleur. Merci de vérifier 🙂", "0661484142");
+                        
+                SendSMSMessage("e-khsab (Pôle Digital) la vache Tag N° " + data.get("cowName").toString()
+                        + " pourrait-être en chaleur. Merci de vérifier 🙂", data.get("userPhone").toString());
             log.info("////////////     SMS sent     ////////////");
             }
             else
