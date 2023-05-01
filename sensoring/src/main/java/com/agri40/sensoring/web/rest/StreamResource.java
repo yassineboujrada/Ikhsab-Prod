@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.checkerframework.checker.units.qual.C;
+import org.checkerframework.checker.units.qual.s;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -145,6 +146,9 @@ public class StreamResource {
                     countHighActivity++;
                 } 
             }
+            Map<String, Object> params1 = stream.getParams();
+            params1.put("avgStepNumber", threshold);
+            stream.setParams(params1);
             Map<String, Object> liveStream = new HashMap<>();
             liveStream.put("avgStepNumber", threshold);
             liveStream.put("createdAt", stream.getCreatedAt());
@@ -179,6 +183,8 @@ public class StreamResource {
             liveStream.put("tag", stream.getParams().get("tag"));
             rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         }
+        // 
+        
         Stream result = streamRepository.save(stream);
         return ResponseEntity
                 .created(new URI("/api/streams/" + result.getId()))
