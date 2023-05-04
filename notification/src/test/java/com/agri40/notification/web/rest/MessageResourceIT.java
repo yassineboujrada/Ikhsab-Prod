@@ -182,7 +182,7 @@ class MessageResourceIT {
         int databaseSizeBeforeUpdate = messageRepository.findAll().size();
 
         // Update the message
-        Message updatedMessage = messageRepository.findById(message.getId()).get();
+        Message updatedMessage = messageRepository.findById(message.getId()).orElseThrow();;
         updatedMessage
             .createdDateTime(UPDATED_CREATED_DATE_TIME)
             .messageType(UPDATED_MESSAGE_TYPE)

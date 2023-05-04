@@ -158,7 +158,7 @@ class GroupsResourceIT {
         int databaseSizeBeforeUpdate = groupsRepository.findAll().size();
 
         // Update the groups
-        Groups updatedGroups = groupsRepository.findById(groups.getId()).get();
+        Groups updatedGroups = groupsRepository.findById(groups.getId()).orElseThrow();
         updatedGroups.name(UPDATED_NAME).userId(UPDATED_USER_ID).gpsAdress(UPDATED_GPS_ADRESS);
 
         restGroupsMockMvc

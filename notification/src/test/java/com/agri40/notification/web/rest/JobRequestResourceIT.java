@@ -176,7 +176,7 @@ class JobRequestResourceIT {
         int databaseSizeBeforeUpdate = jobRequestRepository.findAll().size();
 
         // Update the jobRequest
-        JobRequest updatedJobRequest = jobRequestRepository.findById(jobRequest.getId()).get();
+        JobRequest updatedJobRequest = jobRequestRepository.findById(jobRequest.getId()).orElseThrow();;
         updatedJobRequest
             .consumer(UPDATED_CONSUMER)
             .provider(UPDATED_PROVIDER)

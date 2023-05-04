@@ -66,7 +66,7 @@ public class EventsResource {
                 throw new BadRequestAlertException("Cow not found", ENTITY_NAME, "cownotfound");
             }
             // get cow by id
-            Cow cow = cowRepository.findById(events.getCowId()).get();
+            Cow cow = cowRepository.findById(events.getCowId()).orElseThrow();
             cow.setWaitingForInseminator(true);
             cowRepository.save(cow);
         }

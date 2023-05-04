@@ -210,7 +210,7 @@ class CalendarResourceIT {
         int databaseSizeBeforeUpdate = calendarRepository.findAll().size();
 
         // Update the calendar
-        Calendar updatedCalendar = calendarRepository.findById(calendar.getId()).get();
+        Calendar updatedCalendar = calendarRepository.findById(calendar.getId()).orElseThrow();
         updatedCalendar
             .lactation(UPDATED_LACTATION)
             .jrsLact(UPDATED_JRS_LACT)

@@ -247,8 +247,8 @@ public class StreamResource {
         Optional<Chaleurs> chaleur = chaleurRepository.findFirstByCowIdOrderByDateDesc(cowId);
         if (chaleur.isPresent()) {
             Instant truncatedInstant1 = instant.truncatedTo(ChronoUnit.DAYS);
-            Instant truncatedInstant2 = chaleur.get().getDate().truncatedTo(ChronoUnit.DAYS);
-            Chaleurs oldchaleur = chaleur.get();
+            Instant truncatedInstant2 = chaleur.orElseThrow().getDate().truncatedTo(ChronoUnit.DAYS);
+            Chaleurs oldchaleur = chaleur.orElseThrow();
             if (truncatedInstant1.equals(truncatedInstant2)) {
                 log.debug("--------new day-------");
                 // delete the old one Jrs lact.
@@ -257,7 +257,7 @@ public class StreamResource {
                 newChaleur.setDate(instant);
                 newChaleur.setGroupeid("B1");
                 newChaleur.setEnclosid("13");
-                newChaleur.setJrsLact(chaleur.get().getJrsLact());
+                newChaleur.setJrsLact(chaleur.orElseThrow().getJrsLact());
                 // set the Temps which is hour in createdAt
                 LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
                 int hour = ldt.getHour();
@@ -275,7 +275,7 @@ public class StreamResource {
                 newChaleur.setDate(instant);
                 newChaleur.setGroupeid("B1");
                 newChaleur.setEnclosid("13");
-                newChaleur.setJrsLact(chaleur.get().getJrsLact() + 1);
+                newChaleur.setJrsLact(chaleur.orElseThrow().getJrsLact() + 1);
                 // set the Temps which is hour in createdAt
                 LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
                 int hour = ldt.getHour();

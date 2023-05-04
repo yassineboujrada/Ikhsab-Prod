@@ -157,7 +157,7 @@ class EventsResourceIT {
         int databaseSizeBeforeUpdate = eventsRepository.findAll().size();
 
         // Update the events
-        Events updatedEvents = eventsRepository.findById(events.getId()).get();
+        Events updatedEvents = eventsRepository.findById(events.getId()).orElseThrow();
         updatedEvents.date(UPDATED_DATE).cowId(UPDATED_COW_ID).type(UPDATED_TYPE);
 
         restEventsMockMvc

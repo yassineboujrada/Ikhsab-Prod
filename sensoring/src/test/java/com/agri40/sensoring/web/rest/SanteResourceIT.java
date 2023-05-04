@@ -178,7 +178,7 @@ class SanteResourceIT {
         int databaseSizeBeforeUpdate = santeRepository.findAll().size();
 
         // Update the sante
-        Sante updatedSante = santeRepository.findById(sante.getId()).get();
+        Sante updatedSante = santeRepository.findById(sante.getId()).orElseThrow();
         updatedSante
             .date(UPDATED_DATE)
             .dureePositionCouchee(UPDATED_DUREE_POSITION_COUCHEE)

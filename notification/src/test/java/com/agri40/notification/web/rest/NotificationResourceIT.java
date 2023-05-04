@@ -186,7 +186,7 @@ class NotificationResourceIT {
         int databaseSizeBeforeUpdate = notificationRepository.findAll().size();
 
         // Update the notification
-        Notification updatedNotification = notificationRepository.findById(notification.getId()).get();
+        Notification updatedNotification = notificationRepository.findById(notification.getId()).orElseThrow();;
         updatedNotification
             .date(UPDATED_DATE)
             .seen(UPDATED_SEEN)

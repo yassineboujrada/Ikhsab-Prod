@@ -195,8 +195,8 @@ public class NotificationResource {
         log.debug("REST request to get Notification : {}", id);
         Optional<Notification> notification = notificationRepository.findById(id);
         if (notification.isPresent()) {
-            notification.get().setSeen(true);
-            notificationRepository.save(notification.get());
+            notification.orElseThrow();.setSeen(true);
+            notificationRepository.save(notification.orElseThrow(););
         }
         return ResponseUtil.wrapOrNotFound(notification);
     }

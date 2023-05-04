@@ -216,7 +216,7 @@ class CowResourceIT {
         int databaseSizeBeforeUpdate = cowRepository.findAll().size();
 
         // Update the cow
-        Cow updatedCow = cowRepository.findById(cow.getId()).get();
+        Cow updatedCow = cowRepository.findById(cow.getId()).orElseThrow();
         updatedCow
             .numero(UPDATED_NUMERO)
             .groupeId(UPDATED_GROUPE_ID)

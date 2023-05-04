@@ -234,7 +234,7 @@ class ChaleursResourceIT {
         int databaseSizeBeforeUpdate = chaleursRepository.findAll().size();
 
         // Update the chaleurs
-        Chaleurs updatedChaleurs = chaleursRepository.findById(chaleurs.getId()).get();
+        Chaleurs updatedChaleurs = chaleursRepository.findById(chaleurs.getId()).orElseThrow();
         updatedChaleurs
             .date(UPDATED_DATE)
             .jrsLact(UPDATED_JRS_LACT)

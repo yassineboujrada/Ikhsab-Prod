@@ -157,7 +157,7 @@ class EnclosResourceIT {
         int databaseSizeBeforeUpdate = enclosRepository.findAll().size();
 
         // Update the enclos
-        Enclos updatedEnclos = enclosRepository.findById(enclos.getId()).get();
+        Enclos updatedEnclos = enclosRepository.findById(enclos.getId()).orElseThrow();
         updatedEnclos.name(UPDATED_NAME).userId(UPDATED_USER_ID).groupId(UPDATED_GROUP_ID);
 
         restEnclosMockMvc

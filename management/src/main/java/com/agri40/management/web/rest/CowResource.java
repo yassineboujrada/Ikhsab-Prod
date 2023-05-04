@@ -174,7 +174,7 @@ public class CowResource {
         log.debug("REST request to get Cow : {}", id);
         Optional<Cow> cow = cowRepository.findById(id);
         if (cow.isPresent()) {
-            Cow c = cow.get();
+            Cow c = cow.orElseThrow();
             c.setWaitingForInseminator(true);
             cowRepository.save(c);
             return ResponseEntity.ok().body(c);

@@ -209,7 +209,7 @@ class ProfileResourceIT {
         int databaseSizeBeforeUpdate = profileRepository.findAll().size();
 
         // Update the profile
-        Profile updatedProfile = profileRepository.findById(profile.getId()).get();
+        Profile updatedProfile = profileRepository.findById(profile.getId()).orElseThrow();
         updatedProfile
             .userId(UPDATED_USER_ID)
             .descreption(UPDATED_DESCREPTION)

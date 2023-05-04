@@ -210,7 +210,7 @@ public class ProfileResource {
         log.debug("REST request to update Profile : {}", id);
         Optional<Profile> profile = profileRepository.findById(id);
         if (profile.isPresent()) {
-            Profile profile1 = profile.get();
+            Profile profile1 = profile.orElseThrow();
             Map<String, Object> map = profile1.getRating();
             if (map == null) {
                 map = new HashMap<>();
@@ -236,7 +236,7 @@ public class ProfileResource {
         // get profile by id
         Optional<Profile> profile = profileRepository.findByUserId(id);
         if (profile.isPresent()) {
-            Profile profile1 = profile.get();
+            Profile profile1 = profile.orElseThrow();
             Map<String, Object> profileEnfo = (Map<String, Object>) rabbitTemplate.convertSendAndReceive(
                 "icow.profile",
                 profile1.getUserId()
