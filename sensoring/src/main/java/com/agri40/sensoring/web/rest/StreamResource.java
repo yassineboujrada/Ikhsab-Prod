@@ -461,16 +461,34 @@ public class StreamResource {
 
     // by cowId
     @GetMapping("/streams/filter")
-    public ResponseEntity<List<Stream>> getStreamByCowId(
-            @RequestParam(value = "cowId", required = false) String cowId,@RequestParam(value = "size", required = false) String size,
-            @RequestParam(value = "type", required = false) String type
-            ){ 
+    public ResponseEntity<List<Stream>> getStreamByFilter(
+            @RequestParam(value = "cowId", required = false) String cowId,
+            @RequestParam(value = "size", required = false) String size,
+            @RequestParam(value = "type", required = false) String type) {
         log.debug("REST request to get Stream by cowId : {}", cowId);
         // last size streams
         List<Stream> streams = new ArrayList<>();
-        if(size != null){
-            streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(cowId, type, PageRequest.of(0, Integer.parseInt(size)));
-        }else{
+        if (size != null) {
+            streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(cowId, type,
+                    PageRequest.of(0, Integer.parseInt(size)));
+        } else {
+            streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(cowId, type);
+        }
+        return ResponseEntity.ok().body(streams);
+    }
+
+    @GetMapping("/streams/cow/{cowId}")
+    public ResponseEntity<List<Stream>> getStreamByCowId(
+            @RequestParam(value = "cowId", required = false) String cowId,
+            @RequestParam(value = "size", required = false) String size,
+            @RequestParam(value = "type", required = false) String type) {
+        log.debug("REST request to get Stream by cowId : {}", cowId);
+        // last size streams
+        List<Stream> streams = new ArrayList<>();
+        if (size != null) {
+            streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(cowId, type,
+                    PageRequest.of(0, Integer.parseInt(size)));
+        } else {
             streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(cowId, type);
         }
         return ResponseEntity.ok().body(streams);
