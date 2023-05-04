@@ -479,7 +479,7 @@ public class StreamResource {
 
     @GetMapping("/streams/cow/{cowId}")
     public ResponseEntity<List<Stream>> getStreamByCowId(
-            @RequestParam(value = "cowId", required = false) String cowId,
+            @PathVariable String cowId,
             @RequestParam(value = "size", required = false) String size,
             @RequestParam(value = "type", required = false) String type) {
         log.debug("REST request to get Stream by cowId : {}", cowId);
