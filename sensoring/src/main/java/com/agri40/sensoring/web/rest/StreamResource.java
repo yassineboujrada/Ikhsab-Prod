@@ -177,6 +177,13 @@ public class StreamResource {
             rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         } else if (stream.getType().equals("COLLAR")) {
             processCollarStream(stream);
+            Map<String, Object> liveStream = new HashMap<>();
+            liveStream.put("createdAt", stream.getCreatedAt());
+            liveStream.put("room", "notification" + stream.getCowId());
+            liveStream.put("deviceId", stream.getDeviceId());
+            liveStream.put("cowId", stream.getCowId());
+            liveStream.put("avgActivity", stream.getParams().get("lastActivity"));
+            rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         }
         else if (stream.getType().equals("RFID")){
             
@@ -184,15 +191,6 @@ public class StreamResource {
             liveStream.put("createdAt", stream.getCreatedAt());
             liveStream.put("room", "notification" + stream.getCowId());
             liveStream.put("tag", stream.getParams().get("tag"));
-            rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
-        }
-        else if (stream.getType().equals("COLLAR")) {
-            Map<String, Object> liveStream = new HashMap<>();
-            liveStream.put("createdAt", stream.getCreatedAt());
-            liveStream.put("room", "notification" + stream.getCowId());
-            liveStream.put("deviceId", stream.getDeviceId());
-            liveStream.put("cowId", stream.getCowId());
-            liveStream.put("avgActivity", stream.getParams().get("lastActivity"));
             rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         }
         
