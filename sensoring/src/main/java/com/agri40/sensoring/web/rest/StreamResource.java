@@ -93,7 +93,7 @@ public class StreamResource {
         Stream stream = new Stream();
         stream.setParams(params);
         // set creqtedAt as linux timestamp
-        stream.setCreatedAt(Long.toString(Instant.now().getEpochSecond()));
+        stream.setCreatedAt(Instant.now().getEpochSecond());
         // stream.setDeviceId("rfid-cow");
         stream.setDeviceId("rfid-cow");
         stream.setType("RFID");
@@ -193,6 +193,8 @@ public class StreamResource {
             rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         }
 
+        // convert createdAt to linux timestamp note it can be string of int or long
+        stream.setCreatedAt(Instant.now().getEpochSecond());
         Stream result = streamRepository.save(stream);
         return ResponseEntity
                 .created(new URI("/api/streams/" + result.getId()))
@@ -208,7 +210,7 @@ public class StreamResource {
                     "invalidstream");
         }
 
-        if (stream.getCreatedAt() == null || !(stream.getCreatedAt() instanceof String)) {
+        if (stream.getCreatedAt() == null ) {
             throw new BadRequestAlertException("Invalid stream object: createdAt is missing or not a string",
                     ENTITY_NAME, "invalidstream");
         }
@@ -247,7 +249,7 @@ public class StreamResource {
 
     private void processPedometerStream(Stream stream) {
         String cowId = "643947b4e7f89a54a39b0ba7";
-        Instant instant = Instant.ofEpochSecond(Math.round(Float.parseFloat(stream.getCreatedAt())));
+        Instant instant = Instant.ofEpochSecond(Math.round(stream.getCreatedAt()));
 
         Optional<Chaleurs> chaleur = chaleurRepository.findFirstByCowIdOrderByDateDesc(cowId);
         if (chaleur.isPresent()) {
