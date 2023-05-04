@@ -27,4 +27,6 @@ public interface StreamRepository extends MongoRepository<Stream, String> {
     List<Stream> findByCowIdOrderByCreatedAtDesc(String cowId, PageRequest of);
 
     List<Stream> findByCowIdOrderByCreatedAtDesc(String cowId);
+
+    List<Stream> findByCowIdAndTypeOrderByCreatedAtDesc(String cowId, String type, PageRequest of);
 }
