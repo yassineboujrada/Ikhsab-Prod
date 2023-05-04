@@ -208,10 +208,10 @@ public class JobRequestResource {
         log.debug("REST request to get a page of JobRequests");
         Optional<JobRequest> jobRequest = jobRequestRepository.findById(id);
         if (jobRequest.isPresent()) {
-            rabbitTemplate.convertAndSend("icow.addInsemineEvent", jobRequest.orElseThrow();.getCowId());
-            jobRequest.orElseThrow();.setServiceStatus("DONE");
-            jobRequestRepository.save(jobRequest.orElseThrow(););
-            return ResponseEntity.ok().body(jobRequest.orElseThrow(););
+            rabbitTemplate.convertAndSend("icow.addInsemineEvent", jobRequest.orElseThrow().getCowId());
+            jobRequest.orElseThrow().setServiceStatus("DONE");
+            jobRequestRepository.save(jobRequest.orElseThrow());
+            return ResponseEntity.ok().body(jobRequest.orElseThrow());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -283,7 +283,7 @@ public class JobRequestResource {
             
             rabbitTemplate.convertSendAndReceive("icow.notification", notification);
 
-            return ResponseEntity.ok().body(jobRequest.orElseThrow(););
+            return ResponseEntity.ok().body(jobRequest.orElseThrow());
         } else {
             return ResponseEntity.notFound().build();
         }
