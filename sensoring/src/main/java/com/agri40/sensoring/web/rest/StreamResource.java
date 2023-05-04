@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,8 @@ public class StreamResource {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public StreamResource(StreamRepository streamRepository, SanteRepository santeRepository, ChaleursRepository chaleurRepository) {
+    public StreamResource(StreamRepository streamRepository, SanteRepository santeRepository,
+            ChaleursRepository chaleurRepository) {
         this.streamRepository = streamRepository;
         this.santeRepository = santeRepository;
         this.chaleurRepository = chaleurRepository;
@@ -72,17 +74,17 @@ public class StreamResource {
 
     @GetMapping("/device-stream")
     public ResponseEntity<Stream> createStream(
-        @RequestParam("api_key") String apiKey,
-        @RequestParam("field1") String temperature,
-        @RequestParam("field2") String humidity,
-        @RequestParam("field3") String tag,
-        @RequestParam("field4") String counter
-    ) throws URISyntaxException {
+            @RequestParam("api_key") String apiKey,
+            @RequestParam("field1") String temperature,
+            @RequestParam("field2") String humidity,
+            @RequestParam("field3") String tag,
+            @RequestParam("field4") String counter) throws URISyntaxException {
         // check if the api key is valid
         if (!(apiKey.equals("Yjg3NzRlYWE2YjczZWM2NDUzMjFkNDNhY2RlZTBlMWUyNjJmNWQyODhiNTE1"))) {
             throw new BadRequestAlertException("Invalid api key", ENTITY_NAME, "invalidapikey");
         }
-        // now create a stream object in params put temperature, humidity, counter and in date put the current date tag as device id and type as 'rfid'
+        // now create a stream object in params put temperature, humidity, counter and
+        // in date put the current date tag as device id and type as 'rfid'
         Map<String, Object> params = new HashMap<>();
         params.put("temperature", temperature);
         params.put("humidity", humidity);
@@ -110,7 +112,7 @@ public class StreamResource {
 
     @PostMapping("/streams")
     public ResponseEntity<Stream> createStream(@RequestBody Stream stream, @RequestParam("api_key") String apiKey)
-        throws URISyntaxException {
+            throws URISyntaxException {
         if (!(apiKey.equals("Yjg3NzRlYWE2YjczZWM2NDUzMjFkNDNhY2RlZTBlMWUyNjJmNWQyODhiNTE1"))) {
             throw new BadRequestAlertException("Invalid api key", ENTITY_NAME, "invalidapikey");
         }
@@ -120,17 +122,17 @@ public class StreamResource {
             throw new BadRequestAlertException("A new stream cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        try{
+        try {
             validateStream(stream);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(applicationName, true, 
-                    ENTITY_NAME, "invalidstream", e.getMessage()))
+                    .headers(HeaderUtil.createFailureAlert(applicationName, true,
+                            ENTITY_NAME, "invalidstream", e.getMessage()))
                     .body(null);
         }
 
-        
-        Map<String, Object> cowAndProfileData = (Map<String, Object>) rabbitTemplate.convertSendAndReceive("icow.deviceid",stream.getDeviceId());
+        Map<String, Object> cowAndProfileData = (Map<String, Object>) rabbitTemplate
+                .convertSendAndReceive("icow.deviceid", stream.getDeviceId());
         if (cowAndProfileData == null) {
             throw new BadRequestAlertException("Invalid device id", ENTITY_NAME, "invaliddeviceid");
         }
@@ -147,7 +149,7 @@ public class StreamResource {
                 Stream s = streams.get(i);
                 if (Integer.parseInt(s.getParams().get("stepNumber").toString()) >= threshold) {
                     countHighActivity++;
-                } 
+                }
             }
             Map<String, Object> params1 = stream.getParams();
             params1.put("avgStepNumber", threshold);
@@ -155,25 +157,23 @@ public class StreamResource {
             Map<String, Object> liveStream = new HashMap<>();
             liveStream.put("avgStepNumber", threshold);
             liveStream.put("createdAt", stream.getCreatedAt());
-            liveStream.put("room", "notification"+stream.getCowId());
+            liveStream.put("room", "notification" + stream.getCowId());
             liveStream.put("stepNumber", stream.getParams().get("stepNumber"));
-            if(Integer.parseInt(stream.getParams().get("stepNumber").toString()) >= threshold){
+            if (Integer.parseInt(stream.getParams().get("stepNumber").toString()) >= threshold) {
                 liveStream.put("highActivity", true);
                 log.debug("********* high activity *********");
-            }
-            else 
+            } else
                 liveStream.put("highActivity", false);
 
-            if (countHighActivity >= numStreams * 0.3){
+            if (countHighActivity >= numStreams * 0.3) {
                 liveStream.put("cowHot", true);
                 log.debug("********* Hot Cow *********");
                 // cowid user id phone number
                 rabbitTemplate.convertAndSend("icow.hotSuspect", cowAndProfileData);
-            }
-            else
+            } else
                 liveStream.put("cowHot", false);
             log.debug("live Stream : {}", liveStream);
-            
+
             rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         } else if (stream.getType().equals("COLLAR")) {
             processCollarStream(stream);
@@ -184,16 +184,15 @@ public class StreamResource {
             liveStream.put("cowId", stream.getCowId());
             liveStream.put("avgActivity", stream.getParams().get("lastActivity"));
             rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
-        }
-        else if (stream.getType().equals("RFID")){
-            
+        } else if (stream.getType().equals("RFID")) {
+
             Map<String, Object> liveStream = new HashMap<>();
             liveStream.put("createdAt", stream.getCreatedAt());
             liveStream.put("room", "notification" + stream.getCowId());
             liveStream.put("tag", stream.getParams().get("tag"));
             rabbitTemplate.convertSendAndReceive("icow.live-stream", liveStream);
         }
-        
+
         Stream result = streamRepository.save(stream);
         return ResponseEntity
                 .created(new URI("/api/streams/" + result.getId()))
@@ -205,21 +204,25 @@ public class StreamResource {
     private void validateStream(Stream stream) throws BadRequestAlertException {
         // Check if the required fields are present and have the correct data type
         if (stream.getType() == null || !(stream.getType() instanceof String)) {
-            throw new BadRequestAlertException("Invalid stream object: type is missing or not a string", ENTITY_NAME, "invalidstream");
+            throw new BadRequestAlertException("Invalid stream object: type is missing or not a string", ENTITY_NAME,
+                    "invalidstream");
         }
 
         if (stream.getCreatedAt() == null || !(stream.getCreatedAt() instanceof String)) {
-            throw new BadRequestAlertException("Invalid stream object: createdAt is missing or not a string", ENTITY_NAME, "invalidstream");
+            throw new BadRequestAlertException("Invalid stream object: createdAt is missing or not a string",
+                    ENTITY_NAME, "invalidstream");
         }
 
         if (stream.getParams() == null || !(stream.getParams() instanceof Map)) {
-            throw new BadRequestAlertException("Invalid stream object: params are missing or not a map", ENTITY_NAME, "invalidstream");
+            throw new BadRequestAlertException("Invalid stream object: params are missing or not a map", ENTITY_NAME,
+                    "invalidstream");
         }
 
         // Check if the stream type is valid
         String type = (String) stream.getType();
         if (!type.equals("PEDOMETRE") && !type.equals("COLLAR") && !type.equals("RFID")) {
-            throw new BadRequestAlertException("Invalid stream object: type is not valid", ENTITY_NAME, "invalidstream");
+            throw new BadRequestAlertException("Invalid stream object: type is not valid", ENTITY_NAME,
+                    "invalidstream");
         }
 
         // Check if the params have the correct data type
@@ -227,21 +230,17 @@ public class StreamResource {
         if (type.equals("PEDOMETRE")) {
             if (!params.containsKey("stepNumber") || !(params.get("stepNumber") instanceof String)) {
                 throw new BadRequestAlertException(
-                    "Invalid stream object: stepNumber is missing or not a string",
-                    ENTITY_NAME,
-                    "invalidstream"
-                );
+                        "Invalid stream object: stepNumber is missing or not a string",
+                        ENTITY_NAME,
+                        "invalidstream");
             }
         } else if (type.equals("COLLAR")) {
-            if (
-                !params.containsKey("lastActivity") ||
-                !(params.get("lastActivity") instanceof Double || params.get("lastActivity") instanceof Integer)
-            ) {
+            if (!params.containsKey("lastActivity") ||
+                    !(params.get("lastActivity") instanceof Double || params.get("lastActivity") instanceof Integer)) {
                 throw new BadRequestAlertException(
-                    "Invalid stream object: lastActivity is missing or not a Double nor an Integer",
-                    ENTITY_NAME,
-                    "invalidstream"
-                );
+                        "Invalid stream object: lastActivity is missing or not a Double nor an Integer",
+                        ENTITY_NAME,
+                        "invalidstream");
             }
         }
     }
@@ -311,7 +310,8 @@ public class StreamResource {
                 if (lastActivity1 > 10 && lastActivity2 > 10) {
                     // Send message to the user
                     log.debug("===================== send message to the user =====================");
-                    // queueSender.send("Numéro de vache : " + stream.getCowId() + " est en chaleur");
+                    // queueSender.send("Numéro de vache : " + stream.getCowId() + " est en
+                    // chaleur");
                     log.debug("Message sent to the queue");
                     log.debug("Message saved in the database");
                 }
@@ -327,9 +327,9 @@ public class StreamResource {
         }
         Stream result = streamRepository.save(stream);
         return ResponseEntity
-            .created(new URI("/api/streams/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
-            .body(result);
+                .created(new URI("/api/streams/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
+                .body(result);
     }
 
     /**
@@ -345,8 +345,9 @@ public class StreamResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/streams/{id}")
-    public ResponseEntity<Stream> updateStream(@PathVariable(value = "id", required = false) final String id, @RequestBody Stream stream)
-        throws URISyntaxException {
+    public ResponseEntity<Stream> updateStream(@PathVariable(value = "id", required = false) final String id,
+            @RequestBody Stream stream)
+            throws URISyntaxException {
         log.debug("REST request to update Stream : {}, {}", id, stream);
         if (stream.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -361,9 +362,9 @@ public class StreamResource {
 
         Stream result = streamRepository.save(stream);
         return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, stream.getId()))
-            .body(result);
+                .ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, stream.getId()))
+                .body(result);
     }
 
     /**
@@ -382,9 +383,8 @@ public class StreamResource {
      */
     @PatchMapping(value = "/streams/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Stream> partialUpdateStream(
-        @PathVariable(value = "id", required = false) final String id,
-        @RequestBody Stream stream
-    ) throws URISyntaxException {
+            @PathVariable(value = "id", required = false) final String id,
+            @RequestBody Stream stream) throws URISyntaxException {
         log.debug("REST request to partial update Stream partially : {}, {}", id, stream);
         if (stream.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -398,26 +398,27 @@ public class StreamResource {
         }
 
         Optional<Stream> result = streamRepository
-            .findById(stream.getId())
-            .map(existingStream -> {
-                if (stream.getType() != null) {
-                    existingStream.setType(stream.getType());
-                }
-                if (stream.getParams() != null) {
-                    existingStream.setParams(stream.getParams());
-                }
-                if (stream.getDeviceId() != null) {
-                    existingStream.setDeviceId(stream.getDeviceId());
-                }
-                if (stream.getCreatedAt() != null) {
-                    existingStream.setCreatedAt(stream.getCreatedAt());
-                }
+                .findById(stream.getId())
+                .map(existingStream -> {
+                    if (stream.getType() != null) {
+                        existingStream.setType(stream.getType());
+                    }
+                    if (stream.getParams() != null) {
+                        existingStream.setParams(stream.getParams());
+                    }
+                    if (stream.getDeviceId() != null) {
+                        existingStream.setDeviceId(stream.getDeviceId());
+                    }
+                    if (stream.getCreatedAt() != null) {
+                        existingStream.setCreatedAt(stream.getCreatedAt());
+                    }
 
-                return existingStream;
-            })
-            .map(streamRepository::save);
+                    return existingStream;
+                })
+                .map(streamRepository::save);
 
-        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, stream.getId()));
+        return ResponseUtil.wrapOrNotFound(result,
+                HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, stream.getId()));
     }
 
     /**
@@ -428,10 +429,12 @@ public class StreamResource {
      *         of streams in body.
      */
     @GetMapping("/streams")
-    public ResponseEntity<List<Stream>> getAllStreams(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<Stream>> getAllStreams(
+            @org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Streams");
         Page<Stream> page = streamRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil
+                .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -472,7 +475,9 @@ public class StreamResource {
         } else {
             streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(cowId, type);
         }
+        Collections.reverse(streams);
         return ResponseEntity.ok().body(streams);
+
     }
 
     @GetMapping("/streams/cow/{cowId}")
@@ -489,6 +494,7 @@ public class StreamResource {
         } else {
             streams = streamRepository.findByCowIdAndTypeOrderByCreatedAtDesc(cowId, type);
         }
+        Collections.reverse(streams);
         return ResponseEntity.ok().body(streams);
     }
 
@@ -502,6 +508,7 @@ public class StreamResource {
     public ResponseEntity<Void> deleteStream(@PathVariable String id) {
         log.debug("REST request to delete Stream : {}", id);
         streamRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
+        return ResponseEntity.noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }
