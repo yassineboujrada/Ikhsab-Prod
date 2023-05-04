@@ -196,7 +196,7 @@ public class NotificationResource {
         Optional<Notification> notification = notificationRepository.findById(id);
         if (notification.isPresent()) {
             notification.orElseThrow().setSeen(true);
-            notificationRepository.save(notification.orElseThrow(););
+            notificationRepository.save(notification.orElseThrow());
         }
         return ResponseUtil.wrapOrNotFound(notification);
     }
