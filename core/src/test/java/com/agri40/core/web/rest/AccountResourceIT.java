@@ -314,10 +314,11 @@ class AccountResourceIT {
             .expectStatus()
             .isCreated();
 
-        Optional<User> testUser = userRepository.findOneByEmailIgnoreCase("alice2@example.com").blockOptional();
-        assertThat(testUser).isPresent();
-        testUser.get().setActivated(true);
-        userRepository.save(testUser.get()).block();
+        User testUser = userRepository.findOneByEmailIgnoreCase("alice2@example.com").blockOptional()
+                .orElseThrow(() -> new NoSuchElementException("No value present"));
+        assertThat(testUser).isNotNull();
+        testUser.setActivated(true);
+        userRepository.save(testUser).block();
 
         // Second (already activated) user
         accountWebTestClient
@@ -405,12 +406,13 @@ class AccountResourceIT {
             .expectStatus()
             .isCreated();
 
-        Optional<User> testUser4 = userRepository.findOneByLogin("test-register-duplicate-email-3").blockOptional();
-        assertThat(testUser4).isPresent();
-        assertThat(testUser4.get().getEmail()).isEqualTo("test-register-duplicate-email@example.com");
+        User testUser4 = userRepository.findOneByLogin("test-register-duplicate-email-3").blockOptional()
+                .orElseThrow(() -> new NoSuchElementException("No value present"));
+        assertThat(testUser4).isNotNull();
+        assertThat(testUser4.getEmail()).isEqualTo("test-register-duplicate-email@example.com");
 
-        testUser4.get().setActivated(true);
-        userService.updateUser((new AdminUserDTO(testUser4.get()))).block();
+        testUser4.setActivated(true);
+        userService.updateUser((new AdminUserDTO(testUser4))).block();
 
         // Register 4th (already activated) user
         accountWebTestClient
@@ -445,9 +447,10 @@ class AccountResourceIT {
             .expectStatus()
             .isCreated();
 
-        Optional<User> userDup = userRepository.findOneByLogin("badguy").blockOptional();
-        assertThat(userDup).isPresent();
-        assertThat(userDup.get().getAuthorities())
+        User userDup = userRepository.findOneByLogin("badguy").blockOptional()
+                .orElseThrow(() -> new NoSuchElementException("No value present"));
+        assertThat(userDup).isNotNull();
+        assertThat(userDup.getAuthorities())
             .hasSize(1)
             .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).block());
     }

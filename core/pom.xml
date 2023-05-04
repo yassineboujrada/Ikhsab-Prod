@@ -50,7 +50,7 @@
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
         <spring-boot.version>2.7.3</spring-boot.version>
-        <blockhound-junit-platform.version>1.0.8.RELEASE</blockhound-junit-platform.version>
+        <blockhound-junit-platform.version>1.0.6.RELEASE</blockhound-junit-platform.version>
         <archunit-junit5.version>0.22.0</archunit-junit5.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <!-- Plugin versions -->
@@ -73,7 +73,7 @@
         <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <git-commit-id-plugin.version>5.0.0</git-commit-id-plugin.version>
-        <modernizer-maven-plugin.version>2.4.0</modernizer-maven-plugin.version>
+        <modernizer-maven-plugin.version>2.6.0</modernizer-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
         <jib-maven-plugin.image>eclipse-temurin:11-jre-focal</jib-maven-plugin.image>

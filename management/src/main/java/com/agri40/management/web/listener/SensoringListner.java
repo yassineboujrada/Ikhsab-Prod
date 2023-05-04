@@ -54,7 +54,7 @@ public class SensoringListner {
             // throw new BadRequestAlertException("The Device Is Not Connected To Any Cow", ENTITY_NAME, "id null");
             return null;
         }
-        Cow cow1 = cow.get();
+        Cow cow1 = cow.orElseThrow(() -> new BadRequestAlertException("The Device Is Not Connected To Any Cow", ENTITY_NAME, "id null"));
         Map<String, Object> cowMap = new HashMap<>();
         log.debug("Requested to get Cow id by deviceid: {}", cow1);
         // get user userPhone
@@ -64,7 +64,7 @@ public class SensoringListner {
             // throw new BadRequestAlertException("The Cow Is Not Connected To Any User", ENTITY_NAME, "id null");
             return null;
         }
-        Profile profile1 = profile.get();
+        Profile profile1 = profile.orElseThrow();
         cowMap.put("userPhone", profile1.getPhoneNumber());
         cowMap.put("userId", profile1.getUserId());
         cowMap.put("smsService", profile1.getSmsService());

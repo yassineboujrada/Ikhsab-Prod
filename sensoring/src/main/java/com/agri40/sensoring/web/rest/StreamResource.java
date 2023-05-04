@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -105,6 +107,7 @@ public class StreamResource {
      *         stream has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+
     @PostMapping("/streams")
     public ResponseEntity<Stream> createStream(@RequestBody Stream stream, @RequestParam("api_key") String apiKey)
         throws URISyntaxException {
@@ -450,10 +453,16 @@ public class StreamResource {
 
     // by cowId
     @GetMapping("/streams/cow/{cowId}")
-    public ResponseEntity<List<Stream>> getStreamByCowId(@PathVariable String cowId) {
+    public ResponseEntity<List<Stream>> getStreamByCowId(@PathVariable String cowId,@RequestParam(value = "size", required = false) String size){ 
         log.debug("REST request to get Stream by cowId : {}", cowId);
-        List<Stream> stream = streamRepository.findByCowId(cowId);
-        return ResponseEntity.ok().body(stream);
+        // last size streams
+        List<Stream> streams = new ArrayList<>();
+        if(size != null){
+            streams = streamRepository.findByCowIdOrderByCreatedAtDesc(cowId, PageRequest.of(0, Integer.parseInt(size)));
+        }else{
+            streams = streamRepository.findByCowIdOrderByCreatedAtDesc(cowId);
+        }
+        return ResponseEntity.ok().body(streams);
     }
 
     /**

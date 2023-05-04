@@ -3,6 +3,8 @@ package com.agri40.sensoring.repository;
 import com.agri40.sensoring.domain.Stream;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,4 +23,8 @@ public interface StreamRepository extends MongoRepository<Stream, String> {
     List<Stream> findByCowId(String cowId);
 
     List<Stream> findFirst10ByCowIdAndTypeOrderByCreatedAtDesc(String cowId, String string);
+
+    List<Stream> findByCowIdOrderByCreatedAtDesc(String cowId, PageRequest of);
+
+    List<Stream> findByCowIdOrderByCreatedAtDesc(String cowId);
 }

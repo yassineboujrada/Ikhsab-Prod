@@ -14,5 +14,5 @@
         <module>notification</module>
     </modules>
 </project>
-<!-- mvn -Pprod verify com.google.cloud.tools:jib-maven-plugin:dockerBuild -->
+<!-- mvn -ntp -DskipTests -Pprod verify com.google.cloud.tools:jib-maven-plugin:dockerBuild -->
 <!-- and for microservices run : -->
