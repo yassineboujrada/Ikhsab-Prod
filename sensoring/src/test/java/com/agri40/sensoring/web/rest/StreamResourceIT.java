@@ -36,8 +36,8 @@ class StreamResourceIT {
     private static final String DEFAULT_DEVICE_ID = "AAAAAAAAAA";
     private static final String UPDATED_DEVICE_ID = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_CREATED_AT = 5l;
-    private static final Long UPDATED_CREATED_AT = 5l;
+    private static final Double DEFAULT_CREATED_AT = 5.52;
+    private static final Double UPDATED_CREATED_AT = 5.52;
 
     private static final String ENTITY_API_URL = "/api/streams";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

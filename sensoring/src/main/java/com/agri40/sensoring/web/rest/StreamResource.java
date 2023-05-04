@@ -92,8 +92,8 @@ public class StreamResource {
         params.put("tag", tag);
         Stream stream = new Stream();
         stream.setParams(params);
-        // set creqtedAt as linux timestamp
-        stream.setCreatedAt(Instant.now().getEpochSecond());
+        // set creqtedAt as linux timestamp in double format
+        stream.setCreatedAt(Double.valueOf(Instant.now().getEpochSecond()));
         // stream.setDeviceId("rfid-cow");
         stream.setDeviceId("rfid-cow");
         stream.setType("RFID");
@@ -194,7 +194,7 @@ public class StreamResource {
         }
 
         // convert createdAt to linux timestamp note it can be string of int or long
-        stream.setCreatedAt(Instant.now().getEpochSecond());
+        stream.setCreatedAt(Double.valueOf(Instant.now().getEpochSecond()));
         Stream result = streamRepository.save(stream);
         return ResponseEntity
                 .created(new URI("/api/streams/" + result.getId()))

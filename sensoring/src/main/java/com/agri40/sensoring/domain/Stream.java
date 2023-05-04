@@ -28,7 +28,7 @@ public class Stream implements Serializable {
     private String deviceId;
 
     @Field("created_at")
-    private Long createdAt;
+    private Double createdAt;
 
     @Field("cow_id")
     private String cowId;
@@ -100,16 +100,16 @@ public class Stream implements Serializable {
         this.deviceId = deviceId;
     }
 
-    public Long getCreatedAt() {
+    public Double getCreatedAt() {
         return this.createdAt;
     }
 
-    public Stream createdAt(Long createdAt) {
+    public Stream createdAt(Double createdAt) {
         this.setCreatedAt(createdAt);
         return this;
     }
 
-    public void setCreatedAt(Long createdAt) {
+    public void setCreatedAt(Double createdAt) {
         this.createdAt = createdAt;
     }
 
