@@ -78,7 +78,7 @@ server:
 
 socket-server:
   port: 8089
-  host: 192.168.1.60
+  host: 192.168.100.175
 
 # ===================================================================
 # JHipster specific properties

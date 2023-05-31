@@ -11,6 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 @Configuration
 public class WebSocketConfig {
 
@@ -33,12 +37,25 @@ public class WebSocketConfig {
     private int port;
 
     @Bean
-    public SocketIOServer socketIOServer() {
-        log.info(" host: " + host + " port: " + port);
+    public SocketIOServer socketIOServer() throws FileNotFoundException {
+//        log.info(" host: " + host + " port: " + port);
         com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
         config.setHostname(host);
         config.setPort(port);
         config.setContext("/socket.io");
         return new SocketIOServer(config);
+//        com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
+//        config.setHostname(host);
+//        config.setPort(port);
+//        config.setContext("/socket.io");
+//        config.setKeyStorePassword("agri40Agri");
+////        read key stro stream from /root/projects/Ikhsab-Prod/core/src/main/resources/ssl/e-khsab.jks
+////        config.setKeyStore(this.getClass().getResource("/ssl/e-khsab.jks").getPath());
+////        the setKeyStore param is stream not string
+////        a: you can use the following
+//        config.setKeyStore(new FileInputStream(new File("/ssl/e-khsab.jks")));
+//        config.setKeyStoreFormat("JKS");
+//        return new SocketIOServer(config);
+
     }
 }

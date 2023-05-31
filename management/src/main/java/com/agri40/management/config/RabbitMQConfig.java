@@ -33,4 +33,14 @@ public class RabbitMQConfig {
             new Binding("icow.userprofile", Binding.DestinationType.QUEUE, "icow.exchange", "Icow-routing-key", null)
         );
     }
+//    icow.addInsemineEvent
+    @Bean
+    public Declarables F() {
+        return new Declarables(
+            new DirectExchange("icow.exchange"),
+            new Queue("icow.addInsemineEvent"),
+            new Binding("icow.addInsemineEvent", Binding.DestinationType.QUEUE, "icow.exchange", "Icow-routing-key", null)
+        );
+    }
 }
+
