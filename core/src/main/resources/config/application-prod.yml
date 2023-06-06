@@ -76,7 +76,7 @@ spring:
       discovery:
         enabled: true
   rabbitmq:
-    host: 207.154.192.69
+    host: 164.92.174.179
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
 # keytool -genkey -alias core -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
@@ -121,7 +121,7 @@ jhipster:
     password: admin
   cors:
     # Allow Ionic for JHipster by default (* no longer allowed in Spring Boot 2.4+)
-    allowed-origins: 'https://e-khsab.ma,http://e-khsab.ma,https://dc30-207-154-192-69.ngrok-free.app,https://28e5-207-154-192-69.ngrok-free.app,http://207.154.192.69:8080,http://207.154.192.69:8089,http://207.154.192.69:8001,https://e-khsab.ma,http://localhost:3500,https://d355-105-71-16-227.ngrok-free.app,http://localhost:3000,http://192.168.100.175:8001,http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:9060,https://localhost:9060'
+    allowed-origins: 'https://e-khsab.ma,http://e-khsab.ma,https://dc30-207-154-192-69.ngrok-free.app,https://28e5-207-154-192-69.ngrok-free.app,http://164.92.174.179:8080,http://164.92.174.179:8089,http://164.92.174.179:8001,https://e-khsab.ma,http://localhost:3500,https://d355-105-71-16-227.ngrok-free.app,http://localhost:3000,http://192.168.100.175:8001,http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:9060,https://localhost:9060'
 
     # Enable CORS when running in GitHub Codespaces
     allowed-origin-patterns: 'https://*.githubpreview.dev'

@@ -71,7 +71,7 @@ spring:
       discovery:
         enabled: true
   rabbitmq:
-    host: 207.154.192.69
+    host: 164.92.174.179
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:

@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   core:
     image: core
@@ -7,15 +9,13 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-      - SPRING_DATA_MONGODB_URI=mongodb://root:mongopw@207.154.192.69:27017
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://abdobella:bella462@nfs315.tayahgd.mongodb.net
       - SPRING_DATA_MONGODB_DATABASE=core
       - JHIPSTER_SLEEP=11
       - JHIPSTER_REGISTRY_PASSWORD=admin
     ports:
       - "8080:8001"
       - "8089:8089"
-
-
 
   management:
     image: management
@@ -25,7 +25,7 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-      - SPRING_DATA_MONGODB_URI=mongodb://root:mongopw@207.154.192.69:27017
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://abdobella:bella462@nfs315.tayahgd.mongodb.net
       - SPRING_DATA_MONGODB_DATABASE=management
       - JHIPSTER_SLEEP=10
       - JHIPSTER_REGISTRY_PASSWORD=admin
@@ -38,8 +38,8 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-      - SPRING_DATA_MONGODB_URI=mongodb://root:mongopw@207.154.192.69:27017
-      - SPRING_DATA_MONGODB_DATABASE=notification
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://abdobella:bella462@nfs315.tayahgd.mongodb.net
+      - SPRING_DATA_MONGODB_DATABASE=Ekhsab-notifications
       - JHIPSTER_SLEEP=10
       - JHIPSTER_REGISTRY_PASSWORD=admin
 
@@ -51,20 +51,15 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-      - SPRING_DATA_MONGODB_URI=mongodb://root:mongopw@207.154.192.69:27017
-      - SPRING_DATA_MONGODB_DATABASE=sensoring
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://abdobella:bella462@nfs315.tayahgd.mongodb.net
+      - SPRING_DATA_MONGODB_DATABASE=Ekhsab-sensoring
       - JHIPSTER_SLEEP=10
       - JHIPSTER_REGISTRY_PASSWORD=admin
-
 
   jhipster-registry:
     image: jhipster/jhipster-registry:v7.3.0
     volumes:
       - ./central-server-config:/central-config
-    # By default the JHipster Registry runs with the "dev" and "native"
-    # Spring profiles.
-    # "native" profile means the filesystem is used to store data, see
-    # http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev
@@ -72,8 +67,5 @@ services:
       - JHIPSTER_REGISTRY_PASSWORD=admin
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config
-      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
-      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/jhipster/jhipster-registry/
-      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config
     ports:
       - 8761:8761
